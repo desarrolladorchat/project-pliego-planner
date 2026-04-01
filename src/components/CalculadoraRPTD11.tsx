@@ -257,7 +257,10 @@ const CalculadoraRPTD11 = () => {
     const fuerzaAnguloCond = 2 * project.numConductoresFase * conductor.tensionMaxima * Math.sin(deltaRad / 2);
     const fuerzaAnguloCG = 2 * cableGuardia.tensionMaxima * Math.sin(deltaRad / 2);
 
-    // ── 9. Cruces (§5.7)
+    // ── 9. Separación Fase-Fase (§5.4 RPTD N°07)
+    const separacionFaseFase = 0.36 * Math.sqrt(vano.flechaMax) + project.tensionNominal / 130 + 0.5 * separacion.longCadena;
+
+    // ── 10. Cruces (§5.7)
     const flechaEstimada = vano.longitudVano > 0 ? (conductor.peso * vano.longitudVano * vano.longitudVano) / (8 * (conductor.tensionNormal || 1)) : 0;
     const cruceBTHoriz = distHorizontalBT(flechaEstimada);
     const cruceMTATHoriz = distHorizontalMTAT(flechaEstimada, project.tensionNominal);
