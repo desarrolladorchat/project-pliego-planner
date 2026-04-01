@@ -286,12 +286,13 @@ const CalculadoraRPTD11 = () => {
       tensionMax50, tensionMax70, csNormal, csMaximo,
       cortaduraCond, cortaduraCG,
       fuerzaAnguloCond, fuerzaAnguloCG,
+      separacionFaseFase,
       flechaEstimada, cruceBTHoriz, cruceMTATHoriz, cruceVertMTAT, cruceTensionRed,
       separacionParalelismo,
       pesoHielo, pesoConductorConHielo,
       factoresTabla4,
     };
-  }, [project, conductor, cableGuardia, ambiente, estructura, vano, cortadura, presionViento, cruceTensionDist, kVInferior]);
+  }, [project, conductor, cableGuardia, ambiente, estructura, vano, cortadura, presionViento, cruceTensionDist, kVInferior, separacion]);
 
   return (
     <div className="space-y-5">
