@@ -203,6 +203,7 @@ const CalculadoraRPTD11 = () => {
   const [cortadura, setCortadura] = useState(defaultCortadura);
   const [cruceTensionDist, setCruceTensionDist] = useState(30); // m al punto de cruce
   const [kVInferior, setKVInferior] = useState(66); // kV línea inferior
+  const [separacion, setSeparacion] = useState(defaultSeparacion);
 
   const presionViento = useMemo(() => ambiente.zona === "custom" ? ambiente.presionViento : getPresionViento(ambiente.zona), [ambiente.zona, ambiente.presionViento]);
   const tempAmbiente = useMemo(() => ambiente.zona === "custom" ? ambiente.tempAmbiente : getTempAmbiente(ambiente.zona), [ambiente.zona, ambiente.tempAmbiente]);
