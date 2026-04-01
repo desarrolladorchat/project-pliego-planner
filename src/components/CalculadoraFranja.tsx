@@ -43,6 +43,16 @@ const defaultVano = {
   numAislacionFase: 1,
   vanoViento: 293.72, // m
   vanoPeso: 293.72, // m
+  // Variables para fórmula completa tan(α) cadena (RPTD N°07)
+  k: 1.0, // coeficiente ≤ 1.0
+  Rvp: 1.0, // relación luz de viento / luz de peso
+  diametroAislador: 280, // mm — diámetro del disco del aislador
+  Nca: 1, // número de cadenas de aisladores en paralelo
+  Na: 14, // número de aisladores que forman cada cadena
+  pesoUnitarioAislador: 8.5, // kg — peso unitario del aislador
+  Qva: 40, // kg/m² — presión máxima de viento sobre aisladores
+  Tc: 4350, // kg — tensión mecánica de un subconductor
+  anguloLinea: 0, // ° — ángulo de la línea (δ)
 };
 
 // ds table from RPTD N°07 punto 4.5
@@ -213,19 +223,24 @@ const CalculadoraFranja = () => {
     // df = flecha × sin(αC)
     const df = vano.flecha * Math.sin(alphaCRad);
 
-    // Ángulo de desviación de la cadena de aisladores
-    // Numerador: Pv × fp × [ncp × ΦCP × Lv + na × Aa]
-    // Denominador: ncp × MCP × Lp + na × Ma
-    const fp = 1.2; // factor amplificación presión sobre cadena
-    const ncp = project.numConductoresFase;
+    // Ángulo de desviación de la cadena de aisladores (fórmula completa RPTD N°07)
+    // tan(α) = [k × (Lv × Nsc × d × Qvc + 0.5 × Nca × da × Lc × Qva) × 10⁻³ + Tr] / [(Lv/Rvp) × Nsc × p + 0.5 × Nca × Na × Pa]
+    // Tr = 2 × Nsc × Tc × sin(δ/2)
+    const fp = 1.2; // factor amplificación (legacy display)
+    const ncp = project.numConductoresFase; // Nsc
+    const deltaRad = (vano.anguloLinea * Math.PI) / 180;
+    const Tr = 2 * ncp * vano.Tc * Math.sin(deltaRad / 2);
+
     const numeradorCadena =
-      presionViento * fp * (
-        ncp * (conductor.diametro / 1000) * vano.vanoViento +
-        vano.numAislacionFase * vano.areaAislacion
-      );
+      vano.k * (
+        vano.vanoViento * ncp * (conductor.diametro / 1000) * presionViento +
+        0.5 * vano.Nca * (vano.diametroAislador / 1000) * vano.largoCadena * vano.Qva
+      ) + Tr; // ×10⁻³ already handled by using meters for d
+
     const denominadorCadena =
-      ncp * conductor.peso * vano.vanoPeso +
-      vano.numAislacionFase * vano.pesoAislacion;
+      (vano.vanoViento / vano.Rvp) * ncp * conductor.peso +
+      0.5 * vano.Nca * vano.Na * vano.pesoUnitarioAislador;
+
     const tanAlphaCadena = numeradorCadena / denominadorCadena;
     const alphaCadenaRad = Math.atan(tanAlphaCadena);
     const alphaCadenaDeg = (alphaCadenaRad * 180) / Math.PI;
@@ -254,6 +269,9 @@ const CalculadoraFranja = () => {
       alphaCDeg,
       df,
       fp,
+      Tr,
+      numeradorCadena,
+      denominadorCadena,
       tanAlphaCadena,
       alphaCadenaDeg,
       dc,
@@ -542,6 +560,69 @@ const CalculadoraFranja = () => {
             onChange={(v) => setVano({ ...vano, numAislacionFase: parseInt(v) || 0 })}
           />
         </div>
+
+        {/* Variables adicionales para fórmula completa tan(α) cadena */}
+        <div className="mt-4 pt-4 border-t border-border">
+          <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3">
+            Variables fórmula tan(α) cadena — RPTD N°07
+          </h4>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+            <InputField
+              label="Coeficiente k (≤ 1.0)"
+              value={vano.k}
+              onChange={(v) => setVano({ ...vano, k: parseFloat(v) || 0 })}
+              hint="Coeficiente de reducción"
+            />
+            <InputField
+              label="Relación Lv/Lp (Rvp)"
+              value={vano.Rvp}
+              onChange={(v) => setVano({ ...vano, Rvp: parseFloat(v) || 1 })}
+              hint="Relación luz de viento / luz de peso"
+            />
+            <InputField
+              label="N° Cadenas en Paralelo (Nca)"
+              value={vano.Nca}
+              onChange={(v) => setVano({ ...vano, Nca: parseInt(v) || 1 })}
+            />
+            <InputField
+              label="Diámetro Disco Aislador (da)"
+              value={vano.diametroAislador}
+              onChange={(v) => setVano({ ...vano, diametroAislador: parseFloat(v) || 0 })}
+              unit="mm"
+            />
+            <InputField
+              label="N° Aisladores por Cadena (Na)"
+              value={vano.Na}
+              onChange={(v) => setVano({ ...vano, Na: parseInt(v) || 0 })}
+            />
+            <InputField
+              label="Peso Unitario Aislador (Pa)"
+              value={vano.pesoUnitarioAislador}
+              onChange={(v) => setVano({ ...vano, pesoUnitarioAislador: parseFloat(v) || 0 })}
+              unit="kg"
+            />
+            <InputField
+              label="Presión Viento Aisladores (Qva)"
+              value={vano.Qva}
+              onChange={(v) => setVano({ ...vano, Qva: parseFloat(v) || 0 })}
+              unit="kg/m²"
+            />
+            <InputField
+              label="Tensión Mecánica Subconductor (Tc)"
+              value={vano.Tc}
+              onChange={(v) => setVano({ ...vano, Tc: parseFloat(v) || 0 })}
+              unit="kg"
+              hint="Tensión en condición de viento"
+            />
+            <InputField
+              label="Ángulo de la Línea (δ)"
+              value={vano.anguloLinea}
+              onChange={(v) => setVano({ ...vano, anguloLinea: parseFloat(v) || 0 })}
+              unit="°"
+              hint="0° = línea recta (Tr = 0)"
+            />
+          </div>
+        </div>
       </CollapsibleSection>
 
       {/* 5. Cálculo Detallado dE */}
@@ -641,30 +722,65 @@ const CalculadoraFranja = () => {
         ) : (
           <div className="space-y-4">
             <div className="eng-formula">
-              <p className="text-sm mb-1"><strong>Ángulo de desviación de la cadena:</strong></p>
+              <p className="text-sm mb-1"><strong>Fórmula completa — Ángulo de desviación de la cadena (RPTD N°07):</strong></p>
               <p className="text-center text-sm mb-2">
-                tan(α<sub>cadena</sub>) = P<sub>v</sub> × f<sub>p</sub> × [n<sub>cp</sub> × Φ<sub>C</sub> × L<sub>v</sub> + n<sub>a</sub> × A<sub>a</sub>] / [n<sub>cp</sub> × M<sub>CP</sub> × L<sub>p</sub> + n<sub>a</sub> × M<sub>a</sub>]
+                tan(α) = [k × (L<sub>v</sub> × N<sub>sc</sub> × d × Q<sub>vc</sub> + 0.5 × N<sub>ca</sub> × d<sub>a</sub> × L<sub>c</sub> × Q<sub>va</sub>) + T<sub>r</sub>] / [(L<sub>v</sub>/R<sub>vp</sub>) × N<sub>sc</sub> × p + 0.5 × N<sub>ca</sub> × N<sub>a</sub> × P<sub>a</sub>]
               </p>
+              <p className="text-center text-xs text-muted-foreground mb-1">
+                Donde: T<sub>r</sub> = 2 × N<sub>sc</sub> × T<sub>c</sub> × sin(δ/2)
+              </p>
+            </div>
+
+            {/* Cálculo de Tr */}
+            <div className="eng-note">
+              <p className="text-sm mb-1"><strong>Cálculo de T<sub>r</sub> — Resultante de tensiones mecánicas:</strong></p>
+              <p className="text-center text-sm">
+                T<sub>r</sub> = 2 × {project.numConductoresFase} × {vano.Tc.toFixed(1)} × sin({vano.anguloLinea.toFixed(1)}°/2) = <strong className="text-primary">{calc.Tr.toFixed(2)} kg</strong>
+              </p>
+              {vano.anguloLinea === 0 && (
+                <p className="text-xs text-muted-foreground mt-1">
+                  <Info className="w-3 h-3 inline mr-1" />
+                  δ = 0° (línea recta) → T<sub>r</sub> = 0 kg. Para vértices angulares, ingresar el ángulo de la línea.
+                </p>
+              )}
             </div>
 
             <div className="overflow-x-auto">
               <table className="eng-table">
                 <thead>
-                  <tr><th>Variable</th><th>Valor</th><th>Unidad</th></tr>
+                  <tr><th>Variable</th><th>Descripción</th><th>Valor</th><th>Unidad</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td className="font-mono">P<sub>v</sub></td><td className="font-mono">{presionViento}</td><td>kg/m²</td></tr>
-                  <tr><td className="font-mono">f<sub>p</sub></td><td className="font-mono">1.2</td><td>—</td></tr>
-                  <tr><td className="font-mono">n<sub>cp</sub></td><td className="font-mono">{numConductoresFase}</td><td>—</td></tr>
-                  <tr><td className="font-mono">Φ<sub>C</sub></td><td className="font-mono">{(conductor.diametro / 1000).toFixed(5)}</td><td>m</td></tr>
-                  <tr><td className="font-mono">L<sub>v</sub></td><td className="font-mono">{vano.vanoViento}</td><td>m</td></tr>
-                  <tr><td className="font-mono">n<sub>a</sub></td><td className="font-mono">{vano.numAislacionFase}</td><td>—</td></tr>
-                  <tr><td className="font-mono">A<sub>a</sub></td><td className="font-mono">{vano.areaAislacion}</td><td>m²</td></tr>
-                  <tr><td className="font-mono">M<sub>CP</sub></td><td className="font-mono">{conductor.peso}</td><td>kg/m</td></tr>
-                  <tr><td className="font-mono">L<sub>p</sub></td><td className="font-mono">{vano.vanoPeso}</td><td>m</td></tr>
-                  <tr><td className="font-mono">M<sub>a</sub></td><td className="font-mono">{vano.pesoAislacion}</td><td>kg</td></tr>
+                  <tr><td className="font-mono">k</td><td>Coeficiente (≤ 1.0)</td><td className="font-mono">{vano.k}</td><td>—</td></tr>
+                  <tr><td className="font-mono">L<sub>v</sub></td><td>Luz de viento</td><td className="font-mono">{vano.vanoViento}</td><td>m</td></tr>
+                  <tr><td className="font-mono">N<sub>sc</sub></td><td>N° subconductores/fase</td><td className="font-mono">{project.numConductoresFase}</td><td>—</td></tr>
+                  <tr><td className="font-mono">d</td><td>Diámetro subconductor</td><td className="font-mono">{conductor.diametro}</td><td>mm</td></tr>
+                  <tr><td className="font-mono">Q<sub>vc</sub></td><td>Presión viento conductores</td><td className="font-mono">{presionViento}</td><td>kg/m²</td></tr>
+                  <tr><td className="font-mono">N<sub>ca</sub></td><td>N° cadenas en paralelo</td><td className="font-mono">{vano.Nca}</td><td>—</td></tr>
+                  <tr><td className="font-mono">d<sub>a</sub></td><td>Diámetro disco aislador</td><td className="font-mono">{vano.diametroAislador}</td><td>mm</td></tr>
+                  <tr><td className="font-mono">L<sub>c</sub></td><td>Longitud cadena aisladores</td><td className="font-mono">{vano.largoCadena}</td><td>m</td></tr>
+                  <tr><td className="font-mono">Q<sub>va</sub></td><td>Presión viento aisladores</td><td className="font-mono">{vano.Qva}</td><td>kg/m²</td></tr>
+                  <tr className="border-t-2 border-primary/30"><td className="font-mono font-semibold">T<sub>r</sub></td><td>Resultante tensiones mecánicas</td><td className="font-mono font-semibold text-primary">{calc.Tr.toFixed(2)}</td><td>kg</td></tr>
+                  <tr><td className="font-mono">R<sub>vp</sub></td><td>Relación Lv/Lp</td><td className="font-mono">{vano.Rvp}</td><td>—</td></tr>
+                  <tr><td className="font-mono">p</td><td>Peso unitario subconductor</td><td className="font-mono">{conductor.peso}</td><td>kg/m</td></tr>
+                  <tr><td className="font-mono">N<sub>a</sub></td><td>N° aisladores por cadena</td><td className="font-mono">{vano.Na}</td><td>—</td></tr>
+                  <tr><td className="font-mono">P<sub>a</sub></td><td>Peso unitario aislador</td><td className="font-mono">{vano.pesoUnitarioAislador}</td><td>kg</td></tr>
+                  <tr><td className="font-mono">T<sub>c</sub></td><td>Tensión mecánica subconductor</td><td className="font-mono">{vano.Tc}</td><td>kg</td></tr>
+                  <tr><td className="font-mono">δ</td><td>Ángulo de la línea</td><td className="font-mono">{vano.anguloLinea}</td><td>°</td></tr>
+                  <tr className="border-t-2 border-primary/30">
+                    <td className="font-mono font-semibold">Numerador</td><td>—</td>
+                    <td className="font-mono font-semibold">{calc.numeradorCadena.toFixed(4)}</td><td>—</td>
+                  </tr>
                   <tr>
-                    <td className="font-mono font-semibold">α<sub>cadena</sub></td>
+                    <td className="font-mono font-semibold">Denominador</td><td>—</td>
+                    <td className="font-mono font-semibold">{calc.denominadorCadena.toFixed(4)}</td><td>—</td>
+                  </tr>
+                  <tr>
+                    <td className="font-mono font-semibold">tan(α)</td><td>—</td>
+                    <td className="font-mono font-semibold">{calc.tanAlphaCadena.toFixed(6)}</td><td>—</td>
+                  </tr>
+                  <tr>
+                    <td className="font-mono font-semibold">α<sub>cadena</sub></td><td>Ángulo de desviación</td>
                     <td className="font-mono font-semibold text-primary">{calc.alphaCadenaDeg.toFixed(2)}</td>
                     <td>°</td>
                   </tr>
