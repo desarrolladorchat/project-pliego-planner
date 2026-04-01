@@ -25,7 +25,7 @@ const defaultConductor = {
 };
 
 const defaultAmbiente = {
-  zona: "III" as "II" | "III",
+  zona: "III" as "II" | "III" | "custom",
   altitud: 131, // m.s.n.m.
   tempAmbiente: 10, // °C
   tempMaxima: 35, // °C
@@ -206,9 +206,15 @@ const CalculadoraFranja = () => {
   const [ambiente, setAmbiente] = useState(defaultAmbiente);
   const [vano, setVano] = useState(defaultVano);
 
-  // Auto-update wind pressure when zone changes
-  const presionViento = useMemo(() => getPresionVientoZona(ambiente.zona), [ambiente.zona]);
-  const tempAmbienteZona = useMemo(() => getTempAmbienteZona(ambiente.zona), [ambiente.zona]);
+  // Auto-update wind pressure when zone changes (or use custom values)
+  const presionViento = useMemo(() =>
+    ambiente.zona === "custom" ? ambiente.presionViento : getPresionVientoZona(ambiente.zona as "II" | "III"),
+    [ambiente.zona, ambiente.presionViento]
+  );
+  const tempAmbienteZona = useMemo(() =>
+    ambiente.zona === "custom" ? ambiente.tempAmbiente : getTempAmbienteZona(ambiente.zona as "II" | "III"),
+    [ambiente.zona, ambiente.tempAmbiente]
+  );
 
   const calc = useMemo(() => {
     // Factor de reducción por vano
@@ -447,22 +453,25 @@ const CalculadoraFranja = () => {
             options={[
               { value: "II", label: "Zona II — Costera (50 kg/m²)" },
               { value: "III", label: "Zona III — Interior (40 kg/m²)" },
+              { value: "custom", label: "Personalizada — Definida por usuario" },
             ]}
-            onChange={(v) => setAmbiente({ ...ambiente, zona: v as "II" | "III" })}
+            onChange={(v) => setAmbiente({ ...ambiente, zona: v as "II" | "III" | "custom" })}
           />
           <InputField
-            label="Presión de Viento (auto)"
-            value={presionViento}
-            readOnly
+            label={ambiente.zona === "custom" ? "Presión de Viento" : "Presión de Viento (auto)"}
+            value={ambiente.zona === "custom" ? ambiente.presionViento : presionViento}
+            onChange={ambiente.zona === "custom" ? (v) => setAmbiente({ ...ambiente, presionViento: parseFloat(v) || 0 }) : undefined}
+            readOnly={ambiente.zona !== "custom"}
             unit="kg/m²"
-            hint="Según zona seleccionada"
+            hint={ambiente.zona === "custom" ? "Valor definido manualmente" : "Según zona seleccionada"}
           />
           <InputField
-            label="Temperatura Ambiente (auto)"
-            value={tempAmbienteZona}
-            readOnly
+            label={ambiente.zona === "custom" ? "Temperatura Ambiente" : "Temperatura Ambiente (auto)"}
+            value={ambiente.zona === "custom" ? ambiente.tempAmbiente : tempAmbienteZona}
+            onChange={ambiente.zona === "custom" ? (v) => setAmbiente({ ...ambiente, tempAmbiente: parseFloat(v) || 0 }) : undefined}
+            readOnly={ambiente.zona !== "custom"}
             unit="°C"
-            hint="Según zona seleccionada"
+            hint={ambiente.zona === "custom" ? "Valor definido manualmente" : "Según zona seleccionada"}
           />
           <InputField
             label="Altitud"
