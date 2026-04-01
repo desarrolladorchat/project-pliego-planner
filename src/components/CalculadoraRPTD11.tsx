@@ -141,6 +141,11 @@ const defaultVano = {
   vanoViento: 293.72,      // m
   vanoPeso: 293.72,        // m
   anguloLinea: 5,          // ° — ángulo en el vértice
+  flechaMax: 12,           // m — flecha máxima sin sobrecarga
+};
+
+const defaultSeparacion = {
+  longCadena: 3.5,         // m — longitud cadena de aisladores de suspensión
 };
 
 const defaultCortadura = {
@@ -198,6 +203,7 @@ const CalculadoraRPTD11 = () => {
   const [cortadura, setCortadura] = useState(defaultCortadura);
   const [cruceTensionDist, setCruceTensionDist] = useState(30); // m al punto de cruce
   const [kVInferior, setKVInferior] = useState(66); // kV línea inferior
+  const [separacion, setSeparacion] = useState(defaultSeparacion);
 
   const presionViento = useMemo(() => ambiente.zona === "custom" ? ambiente.presionViento : getPresionViento(ambiente.zona), [ambiente.zona, ambiente.presionViento]);
   const tempAmbiente = useMemo(() => ambiente.zona === "custom" ? ambiente.tempAmbiente : getTempAmbiente(ambiente.zona), [ambiente.zona, ambiente.tempAmbiente]);
@@ -251,7 +257,10 @@ const CalculadoraRPTD11 = () => {
     const fuerzaAnguloCond = 2 * project.numConductoresFase * conductor.tensionMaxima * Math.sin(deltaRad / 2);
     const fuerzaAnguloCG = 2 * cableGuardia.tensionMaxima * Math.sin(deltaRad / 2);
 
-    // ── 9. Cruces (§5.7)
+    // ── 9. Separación Fase-Fase (§5.4 RPTD N°07)
+    const separacionFaseFase = 0.36 * Math.sqrt(vano.flechaMax) + project.tensionNominal / 130 + 0.5 * separacion.longCadena;
+
+    // ── 10. Cruces (§5.7)
     const flechaEstimada = vano.longitudVano > 0 ? (conductor.peso * vano.longitudVano * vano.longitudVano) / (8 * (conductor.tensionNormal || 1)) : 0;
     const cruceBTHoriz = distHorizontalBT(flechaEstimada);
     const cruceMTATHoriz = distHorizontalMTAT(flechaEstimada, project.tensionNominal);
@@ -280,12 +289,13 @@ const CalculadoraRPTD11 = () => {
       tensionMax50, tensionMax70, csNormal, csMaximo,
       cortaduraCond, cortaduraCG,
       fuerzaAnguloCond, fuerzaAnguloCG,
+      separacionFaseFase,
       flechaEstimada, cruceBTHoriz, cruceMTATHoriz, cruceVertMTAT, cruceTensionRed,
       separacionParalelismo,
       pesoHielo, pesoConductorConHielo,
       factoresTabla4,
     };
-  }, [project, conductor, cableGuardia, ambiente, estructura, vano, cortadura, presionViento, cruceTensionDist, kVInferior]);
+  }, [project, conductor, cableGuardia, ambiente, estructura, vano, cortadura, presionViento, cruceTensionDist, kVInferior, separacion]);
 
   return (
     <div className="space-y-5">
@@ -329,7 +339,7 @@ const CalculadoraRPTD11 = () => {
       </div>
 
       {/* ── 1. Datos del Proyecto ── */}
-      <CollapsibleSection title="1. Datos del Proyecto" icon={Settings} badge="General">
+      <CollapsibleSection title="1. Datos del Proyecto" icon={Settings} badge="General" defaultOpen={false}>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
           <div className="sm:col-span-2 md:col-span-3">
             <InputField label="Nombre del Proyecto" value={project.projectName} onChange={(v) => setProject({ ...project, projectName: v })} />
@@ -342,7 +352,7 @@ const CalculadoraRPTD11 = () => {
       </CollapsibleSection>
 
       {/* ── 2. Conductor ── */}
-      <CollapsibleSection title="2. Conductor de Fase" icon={Zap} badge="§5.10">
+      <CollapsibleSection title="2. Conductor de Fase" icon={Zap} badge="§5.10" defaultOpen={false}>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
           <InputField label="Tipo" value={conductor.tipo} onChange={(v) => setConductor({ ...conductor, tipo: v })} />
           <InputField label="Diámetro (Φ)" value={conductor.diametro} onChange={(v) => setConductor({ ...conductor, diametro: parseFloat(v) || 0 })} unit="mm" />
@@ -372,7 +382,7 @@ const CalculadoraRPTD11 = () => {
       </CollapsibleSection>
 
       {/* ── 4. Condiciones Ambientales ── */}
-      <CollapsibleSection title="4. Condiciones Ambientales" icon={Wind} badge="§5.8">
+      <CollapsibleSection title="4. Condiciones Ambientales" icon={Wind} badge="§5.8" defaultOpen={false}>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
           <SelectField label="Zona Geográfica (§5.8.1)" value={ambiente.zona}
             options={[
@@ -423,7 +433,7 @@ const CalculadoraRPTD11 = () => {
       </CollapsibleSection>
 
       {/* ── 5. Estructura de Soporte ── */}
-      <CollapsibleSection title="5. Estructura de Soporte" icon={Building} badge="§5.9 / §5.12 / §5.28">
+      <CollapsibleSection title="5. Estructura de Soporte" icon={Building} badge="§5.9 / §5.12 / §5.28" defaultOpen={false}>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
           <SelectField label="Tipo de Estructura (§5.9)" value={estructura.tipo}
             options={[
@@ -451,11 +461,12 @@ const CalculadoraRPTD11 = () => {
           <InputField label="Vano Viento (Lv)" value={vano.vanoViento} onChange={(v) => setVano({ ...vano, vanoViento: parseFloat(v) || 0 })} unit="m" />
           <InputField label="Vano Peso (Lp)" value={vano.vanoPeso} onChange={(v) => setVano({ ...vano, vanoPeso: parseFloat(v) || 0 })} unit="m" />
           <InputField label="Ángulo de la Línea (δ)" value={vano.anguloLinea} onChange={(v) => setVano({ ...vano, anguloLinea: parseFloat(v) || 0 })} unit="°" hint="Para solicitación de ángulo" />
+          <InputField label="Flecha Máxima (F)" value={vano.flechaMax} onChange={(v) => setVano({ ...vano, flechaMax: parseFloat(v) || 0 })} unit="m" hint="Sin sobrecarga, para sep. fase-fase" />
         </div>
       </CollapsibleSection>
 
       {/* ── 7. Factor Gc y Fuerza de Viento (§5.8.4 / §5.12) ── */}
-      <CollapsibleSection title="7. Factor Gc y Fuerza de Viento sobre Estructura" icon={Wind} badge="§5.8.4 / §5.12">
+      <CollapsibleSection title="7. Factor Gc y Fuerza de Viento sobre Estructura" icon={Wind} badge="§5.8.4 / §5.12" defaultOpen={false}>
         <div className="space-y-4">
           {/* Gc */}
           <div className="eng-formula">
@@ -517,7 +528,7 @@ const CalculadoraRPTD11 = () => {
       </CollapsibleSection>
 
       {/* ── 8. Viento sobre conductores (§5.11) ── */}
-      <CollapsibleSection title="8. Viento sobre Conductores y Cables" icon={Wind} badge="§5.11">
+      <CollapsibleSection title="8. Viento sobre Conductores y Cables" icon={Wind} badge="§5.11" defaultOpen={false}>
         <div className="space-y-4">
           <div className="eng-formula">
             <p className="text-sm mb-1"><strong>Fuerza de viento sobre conductor (§5.11.1):</strong></p>
@@ -547,7 +558,7 @@ const CalculadoraRPTD11 = () => {
       </CollapsibleSection>
 
       {/* ── 9. Tensiones Mecánicas y Coef. Seguridad (§5.10) ── */}
-      <CollapsibleSection title="9. Tensiones Mecánicas y Coef. de Seguridad" icon={Zap} badge="§5.10">
+      <CollapsibleSection title="9. Tensiones Mecánicas y Coef. de Seguridad" icon={Zap} badge="§5.10" defaultOpen={false}>
         <div className="space-y-4">
           <div className="overflow-x-auto">
             <table className="eng-table">
@@ -590,7 +601,7 @@ const CalculadoraRPTD11 = () => {
       </CollapsibleSection>
 
       {/* ── 10. Cortadura de Conductor (§5.14 Tabla N°3) ── */}
-      <CollapsibleSection title="10. Cortadura de Conductor" icon={Zap} badge="§5.14 Tabla N°3">
+      <CollapsibleSection title="10. Cortadura de Conductor" icon={Zap} badge="§5.14 Tabla N°3" defaultOpen={false}>
         <div className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
             <SelectField label="Tipo de Estructura" value={cortadura.tipoEstructura}
@@ -660,8 +671,45 @@ const CalculadoraRPTD11 = () => {
         </div>
       </CollapsibleSection>
 
-      {/* ── 12. Cruces y Paralelismos (§5.7) ── */}
-      <CollapsibleSection title="12. Cruces y Paralelismos" icon={Shield} badge="§5.7" defaultOpen={false}>
+      {/* ── 12. Separación Fase-Fase (§5.4 RPTD N°07) ── */}
+      <CollapsibleSection title="12. Separación Fase-Fase" icon={Ruler} badge="§5.4" defaultOpen={false}>
+        <div className="space-y-4">
+          <div className="eng-formula">
+            <p className="text-sm mb-1"><strong>Separación mínima fase-fase (Zonas II y III):</strong></p>
+            <p className="text-center text-base font-semibold mb-3">
+              S = 0,36 × √F + kV/130 + 0,5 × C
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+            <InputField label="Flecha Máxima (F)" value={vano.flechaMax} onChange={(v) => setVano({ ...vano, flechaMax: parseFloat(v) || 0 })} unit="m" hint="Sin sobrecarga" />
+            <InputField label="Tensión Nominal (kV)" value={project.tensionNominal} onChange={(v) => setProject({ ...project, tensionNominal: parseFloat(v) || 0 })} unit="kV" />
+            <InputField label="Long. Cadena Aisladores (C)" value={separacion.longCadena} onChange={(v) => setSeparacion({ ...separacion, longCadena: parseFloat(v) || 0 })} unit="m" hint="Cadena de suspensión" />
+          </div>
+          <div className="eng-formula">
+            <p className="text-sm">
+              S = 0,36 × √{fmt(vano.flechaMax, 2)} + {fmt(project.tensionNominal, 0)}/130 + 0,5 × {fmt(separacion.longCadena, 2)}
+              {" "}= <strong className="text-primary">{fmt(calc.separacionFaseFase, 3)} m</strong>
+            </p>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="eng-table">
+              <thead><tr><th>Variable</th><th>Descripción</th><th>Valor</th><th>Unidad</th></tr></thead>
+              <tbody>
+                <tr><td className="font-mono font-semibold">F</td><td>Flecha máxima sin sobrecarga</td><td className="font-mono">{fmt(vano.flechaMax, 2)}</td><td>m</td></tr>
+                <tr><td className="font-mono font-semibold">kV</td><td>Tensión nominal entre conductores</td><td className="font-mono">{fmt(project.tensionNominal, 0)}</td><td>kV</td></tr>
+                <tr><td className="font-mono font-semibold">C</td><td>Longitud cadena aisladores suspensión</td><td className="font-mono">{fmt(separacion.longCadena, 2)}</td><td>m</td></tr>
+                <tr className="border-t-2 border-primary/30">
+                  <td className="font-mono font-bold">S</td><td>Separación mínima fase-fase</td>
+                  <td className="font-mono font-bold text-primary">{fmt(calc.separacionFaseFase, 3)}</td><td>m</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      {/* ── 13. Cruces y Paralelismos (§5.7) ── */}
+      <CollapsibleSection title="13. Cruces y Paralelismos" icon={Shield} badge="§5.7" defaultOpen={false}>
         <div className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-3">
             <InputField label="Distancia al punto de cruce (§5.7.5)" value={cruceTensionDist} onChange={(v) => setCruceTensionDist(parseFloat(v) || 0)} unit="m" />
@@ -714,9 +762,9 @@ const CalculadoraRPTD11 = () => {
         </div>
       </CollapsibleSection>
 
-      {/* ── 13. Hielo (§5.21) ── */}
+      {/* ── 14. Hielo (§5.21) ── */}
       {ambiente.espHielo > 0 && (
-        <CollapsibleSection title="13. Sobrecarga de Hielo" icon={Wind} badge="§5.21">
+        <CollapsibleSection title="14. Sobrecarga de Hielo" icon={Wind} badge="§5.21" defaultOpen={false}>
           <div className="space-y-4">
             <div className="eng-formula">
               <p className="text-sm">
@@ -730,8 +778,8 @@ const CalculadoraRPTD11 = () => {
         </CollapsibleSection>
       )}
 
-      {/* ── 14. Factores de Mínima Sobrecarga (§5.28.8 Tabla N°4) ── */}
-      <CollapsibleSection title="14. Factores de Mínima Sobrecarga" icon={Building} badge="§5.28.8 Tabla N°4" defaultOpen={false}>
+      {/* ── 15. Factores de Mínima Sobrecarga (§5.28.8 Tabla N°4) ── */}
+      <CollapsibleSection title="15. Factores de Mínima Sobrecarga" icon={Building} badge="§5.28.8 Tabla N°4" defaultOpen={false}>
         <div className="overflow-x-auto">
           <table className="eng-table">
             <thead><tr><th>Condición</th><th>Factor</th></tr></thead>
@@ -753,7 +801,7 @@ const CalculadoraRPTD11 = () => {
       </CollapsibleSection>
 
       {/* ── Resumen de Cálculos — Pliego N°11 ── */}
-      <CollapsibleSection title="Resumen de Cálculos — Pliego N°11" icon={Calculator} badge="Verificación">
+      <CollapsibleSection title="Resumen de Cálculos — Pliego N°11" icon={Calculator} badge="Verificación" defaultOpen={false}>
         <div className="overflow-x-auto">
           <table className="eng-table">
             <thead>
@@ -780,6 +828,7 @@ const CalculadoraRPTD11 = () => {
                 { param: "Viento sobre Conductor", value: calc.fuerzaVientoConductor, unit: "kg", decimals: 2 },
                 { param: "Cortadura Conductor", value: calc.cortaduraCond, unit: "kg", decimals: 2 },
                 { param: "Fuerza Angular Conductor", value: calc.fuerzaAnguloCond, unit: "kg", decimals: 2 },
+                { param: "Separación Fase-Fase (S)", value: calc.separacionFaseFase, unit: "m", decimals: 3, highlight: true },
                 { param: "Separación Paralelismo", value: calc.separacionParalelismo, unit: "m", decimals: 2 },
               ].map((row, i) => (
                 <tr key={i} className={row.highlight ? "!bg-primary/5" : ""}>

@@ -1,4 +1,25 @@
-import { BookOpen, Wind, Zap, Shield, Building, Wrench, Mountain, Hammer, Snowflake } from "lucide-react";
+import { useState } from "react";
+import { BookOpen, Wind, Zap, Shield, Building, Wrench, Mountain, Hammer, Snowflake, ChevronDown, ChevronUp } from "lucide-react";
+
+const CollapsibleSection = ({
+  title, icon: Icon, children, defaultOpen = false,
+}: {
+  title: string; icon: React.ElementType; children: React.ReactNode; defaultOpen?: boolean;
+}) => {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div className="bg-card rounded-xl shadow-sm border border-border overflow-hidden">
+      <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between px-3 sm:px-6 py-3 sm:py-4 hover:bg-muted/30 transition-colors">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <div className="p-1.5 sm:p-2 rounded-lg bg-primary/10 flex-shrink-0"><Icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" /></div>
+          <h3 className="text-sm sm:text-base font-bold text-foreground truncate">{title}</h3>
+        </div>
+        {open ? <ChevronUp className="w-4 h-4 text-muted-foreground" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
+      </button>
+      {open && <div className="px-3 sm:px-6 pb-4 sm:pb-6 pt-2">{children}</div>}
+    </div>
+  );
+};
 
 const PliegoRPTD11 = () => {
   return (
@@ -24,22 +45,14 @@ const PliegoRPTD11 = () => {
       </div>
 
       {/* 1. Objetivo y Alcance */}
-      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
-        <h3 className="eng-section-title">
-          <BookOpen className="w-5 h-5 text-primary" />
-          1 – 2. Objetivo y Alcance
-        </h3>
+      <CollapsibleSection title="1 – 2. Objetivo y Alcance" icon={BookOpen}>
         <p className="text-foreground/80 leading-relaxed text-sm">
           Establecer los requisitos de seguridad que deberán cumplir las líneas eléctricas aéreas, subterráneas o subacuáticas, cuya tensión nominal de operación sea superior a 23.000 volts. Aplica a instalaciones de transporte de energía eléctrica.
         </p>
-      </div>
+      </CollapsibleSection>
 
       {/* 3. Referencias normativas */}
-      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
-        <h3 className="eng-section-title">
-          <BookOpen className="w-5 h-5 text-primary" />
-          3. Referencias Normativas
-        </h3>
+      <CollapsibleSection title="3. Referencias Normativas" icon={BookOpen}>
         <div className="overflow-x-auto">
           <table className="eng-table text-xs">
             <thead>
@@ -68,14 +81,10 @@ const PliegoRPTD11 = () => {
             </tbody>
           </table>
         </div>
-      </div>
+      </CollapsibleSection>
 
       {/* 4. Terminología */}
-      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
-        <h3 className="eng-section-title">
-          <BookOpen className="w-5 h-5 text-primary" />
-          4. Terminología y Definiciones (selección)
-        </h3>
+      <CollapsibleSection title="4. Terminología y Definiciones" icon={BookOpen}>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {[
             ["Aislador", "Elemento de material aislante para soportar y separar eléctricamente un conductor."],
@@ -93,14 +102,10 @@ const PliegoRPTD11 = () => {
             </div>
           ))}
         </div>
-      </div>
+      </CollapsibleSection>
 
       {/* 5. Líneas de transporte aéreas */}
-      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
-        <h3 className="eng-section-title">
-          <Shield className="w-5 h-5 text-primary" />
-          5.1 – 5.7 Requisitos Básicos y Cruces
-        </h3>
+      <CollapsibleSection title="5.1 – 5.7 Requisitos Básicos y Cruces" icon={Shield}>
         <ul className="list-disc list-inside text-sm text-foreground/80 space-y-2 mb-4">
           <li>Diseñada y construida para cumplir su propósito sin riesgo de lesiones o daños.</li>
           <li>Coordinación de tensiones mecánicas de todos los componentes.</li>
@@ -130,15 +135,10 @@ const PliegoRPTD11 = () => {
             <p><strong>Distancia vertical (MT/AT):</strong> 1,5 + (kV<sub>s</sub> + kV<sub>i</sub>)/170 (m)</p>
           </div>
         </div>
-      </div>
+      </CollapsibleSection>
 
       {/* 5.8 Condiciones geográficas y meteorológicas */}
-      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
-        <h3 className="eng-section-title">
-          <Mountain className="w-5 h-5 text-primary" />
-          5.8 Condiciones Geográficas y Meteorológicas
-        </h3>
-
+      <CollapsibleSection title="5.8 Condiciones Geográficas y Meteorológicas" icon={Mountain}>
         <h4 className="eng-subsection-title">5.8.1 Zonificación del País – Tabla N° 1</h4>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
           <div>
@@ -193,27 +193,19 @@ const PliegoRPTD11 = () => {
         <div className="eng-note mt-4">
           <p className="text-sm"><strong>5.8.7 Zonas I y IV:</strong> Se requiere estudio climático con: estudio meteorológico, escenarios extremos, zonificación, combinaciones de cargas, riesgo de tormentas eléctricas.</p>
         </div>
-      </div>
+      </CollapsibleSection>
 
       {/* 5.9 Estructuras de soporte */}
-      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
-        <h3 className="eng-section-title">
-          <Building className="w-5 h-5 text-primary" />
-          5.9 Estructuras de Soporte
-        </h3>
+      <CollapsibleSection title="5.9 Estructuras de Soporte" icon={Building}>
         <ul className="list-disc list-inside text-sm text-foreground/80 space-y-2">
           <li>Pueden ser metálicas reticuladas, postes metálicos, postes de hormigón u otro material.</li>
           <li><strong>Suspensión:</strong> Soportan esfuerzos moderados en dirección de la línea. Rectas y ángulos pequeños.</li>
           <li><strong>Anclaje:</strong> Resisten esfuerzos en múltiples direcciones, dividen la línea en sectores mecánicamente independientes.</li>
         </ul>
-      </div>
+      </CollapsibleSection>
 
       {/* 5.10 Solicitaciones estructurales */}
-      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
-        <h3 className="eng-section-title">
-          <Hammer className="w-5 h-5 text-primary" />
-          5.10 Solicitaciones Estructurales
-        </h3>
+      <CollapsibleSection title="5.10 Solicitaciones Estructurales" icon={Hammer}>
         <div className="mb-4">
           <p className="text-sm text-foreground/80 mb-3">Solicitaciones a considerar en el diseño:</p>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
@@ -230,15 +222,10 @@ const PliegoRPTD11 = () => {
           <p>• Tensión normal a 15°C, sin sobrecarga.</p>
           <p>• Solicitaciones sísmicas no se requieren (proporcionalmente menores que peso y tensión mecánica).</p>
         </div>
-      </div>
+      </CollapsibleSection>
 
       {/* 5.11-5.12 Solicitación de viento */}
-      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
-        <h3 className="eng-section-title">
-          <Wind className="w-5 h-5 text-primary" />
-          5.11 – 5.12 Solicitación de Viento
-        </h3>
-
+      <CollapsibleSection title="5.11 – 5.12 Solicitación de Viento" icon={Wind}>
         <div className="mb-4 space-y-2 text-sm text-foreground/80">
           <p><strong>5.11.1 Perpendicular:</strong> Sobre soporte, crucetas, aisladores y conductores en los dos semivanos contiguos.</p>
           <p><strong>5.11.2 Paralelo:</strong> = 1/4 de la presión sobre conductores.</p>
@@ -271,15 +258,10 @@ const PliegoRPTD11 = () => {
         <div className="eng-formula mt-3">
           <p className="text-sm"><strong>Reticulada:</strong> C<sub>f</sub> = 4.0·e² − 5.9·e + 4.0 &nbsp;&nbsp;donde e = A<sub>f</sub>/A<sub>g</sub> (factor de solidez)</p>
         </div>
-      </div>
+      </CollapsibleSection>
 
       {/* 5.13-5.14 Cortadura */}
-      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
-        <h3 className="eng-section-title">
-          <Wrench className="w-5 h-5 text-primary" />
-          5.13 – 5.14 Solicitaciones de Ángulo y Cortadura
-        </h3>
-
+      <CollapsibleSection title="5.13 – 5.14 Ángulo y Cortadura" icon={Wrench}>
         <h4 className="eng-subsection-title">5.14.6 Cortadura de Conductor (Zonas II y III) – Tabla N° 3</h4>
         <div className="overflow-x-auto mb-4">
           <table className="eng-table">
@@ -312,15 +294,10 @@ const PliegoRPTD11 = () => {
             <p><strong>k = 1,0</strong> en otro caso</p>
           </div>
         </div>
-      </div>
+      </CollapsibleSection>
 
       {/* 5.28 Diseño de estructuras */}
-      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
-        <h3 className="eng-section-title">
-          <Building className="w-5 h-5 text-primary" />
-          5.28 Diseño de Estructuras de Soporte
-        </h3>
-
+      <CollapsibleSection title="5.28 Diseño de Estructuras de Soporte" icon={Building}>
         <h4 className="eng-subsection-title">5.28.8 Factor de Mínima Sobrecarga – Tabla N° 4</h4>
         <div className="overflow-x-auto mb-4">
           <table className="eng-table">
@@ -350,20 +327,16 @@ const PliegoRPTD11 = () => {
           <p><strong>Postes metálicos (5.28.6):</strong> Tubos laminados o lámina doblada (forma poligonal), soldadura por soldadores calificados.</p>
           <p><strong>Postes de hormigón (5.28.7):</strong> Tipo armado vibrado, coef. seguridad ≥ 2 respecto a ruptura. Longitud hasta 18 m.</p>
         </div>
-      </div>
+      </CollapsibleSection>
 
       {/* 5.21-5.24 Hielo y Galloping */}
-      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border">
-        <h3 className="eng-section-title">
-          <Snowflake className="w-5 h-5 text-primary" />
-          5.21 – 5.24 Hielo, Galloping y Sleet Jump
-        </h3>
+      <CollapsibleSection title="5.21 – 5.24 Hielo, Galloping y Sleet Jump" icon={Snowflake}>
         <ul className="list-disc list-inside text-sm text-foreground/80 space-y-2">
           <li><strong>5.21 Hielo máximo:</strong> Cargas verticales por manguito de hielo sobre conductores y cable de guardia. Peso específico hielo: 0,9 gr/cm³.</li>
           <li><strong>5.22 Desequilibrio/torsión por hielo:</strong> Según IEC 60826.</li>
           <li><strong>5.24 Galloping y Sleet Jump:</strong> Solo en Zonas I y IV.</li>
         </ul>
-      </div>
+      </CollapsibleSection>
     </div>
   );
 };
