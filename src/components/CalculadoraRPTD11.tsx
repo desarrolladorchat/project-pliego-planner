@@ -141,6 +141,11 @@ const defaultVano = {
   vanoViento: 293.72,      // m
   vanoPeso: 293.72,        // m
   anguloLinea: 5,          // ° — ángulo en el vértice
+  flechaMax: 12,           // m — flecha máxima sin sobrecarga
+};
+
+const defaultSeparacion = {
+  longCadena: 3.5,         // m — longitud cadena de aisladores de suspensión
 };
 
 const defaultCortadura = {
