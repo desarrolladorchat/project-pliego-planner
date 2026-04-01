@@ -402,7 +402,7 @@ const CalculadoraFranja = () => {
 
       {/* 3. Condiciones Ambientales */}
       <CollapsibleSection title="3. Condiciones Ambientales" icon={Wind} badge="RPTD N°11 §5.8">
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
           <SelectField
             label="Zona Geográfica (RPTD N°11 §5.8.1)"
             value={ambiente.zona}
