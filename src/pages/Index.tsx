@@ -87,6 +87,7 @@ const Index = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {activeTab === "rptd07" && <PliegoRPTD07 />}
         {activeTab === "rptd11" && <PliegoRPTD11 />}
+        {activeTab === "calculadora" && <CalculadoraFranja />}
       </main>
 
       {/* Footer */}
