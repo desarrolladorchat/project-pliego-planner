@@ -433,7 +433,7 @@ const CalculadoraRPTD11 = () => {
       </CollapsibleSection>
 
       {/* ── 5. Estructura de Soporte ── */}
-      <CollapsibleSection title="5. Estructura de Soporte" icon={Building} badge="§5.9 / §5.12 / §5.28">
+      <CollapsibleSection title="5. Estructura de Soporte" icon={Building} badge="§5.9 / §5.12 / §5.28" defaultOpen={false}>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
           <SelectField label="Tipo de Estructura (§5.9)" value={estructura.tipo}
             options={[
