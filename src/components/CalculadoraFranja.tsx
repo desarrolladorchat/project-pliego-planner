@@ -217,16 +217,15 @@ const CalculadoraFranja = () => {
     // Numerador: Pv × fp × [ncp × ΦCP × Lv + na × Aa]
     // Denominador: ncp × MCP × Lp + na × Ma
     const fp = 1.2; // factor amplificación presión sobre cadena
+    const ncp = project.numConductoresFase;
     const numeradorCadena =
       presionViento * fp * (
-        vano.numConductoresFase * (conductor.diametro / 1000) * vano.vanoViento +
+        ncp * (conductor.diametro / 1000) * vano.vanoViento +
         vano.numAislacionFase * vano.areaAislacion
       );
     const denominadorCadena =
-      vano.numConductoresFase * conductor.peso * vano.vanoPeso +
+      ncp * conductor.peso * vano.vanoPeso +
       vano.numAislacionFase * vano.pesoAislacion;
-
-    const numConductoresFase = project.numConductoresFase;
     const tanAlphaCadena = numeradorCadena / denominadorCadena;
     const alphaCadenaRad = Math.atan(tanAlphaCadena);
     const alphaCadenaDeg = (alphaCadenaRad * 180) / Math.PI;
