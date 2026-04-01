@@ -466,7 +466,7 @@ const CalculadoraRPTD11 = () => {
       </CollapsibleSection>
 
       {/* ── 7. Factor Gc y Fuerza de Viento (§5.8.4 / §5.12) ── */}
-      <CollapsibleSection title="7. Factor Gc y Fuerza de Viento sobre Estructura" icon={Wind} badge="§5.8.4 / §5.12">
+      <CollapsibleSection title="7. Factor Gc y Fuerza de Viento sobre Estructura" icon={Wind} badge="§5.8.4 / §5.12" defaultOpen={false}>
         <div className="space-y-4">
           {/* Gc */}
           <div className="eng-formula">
