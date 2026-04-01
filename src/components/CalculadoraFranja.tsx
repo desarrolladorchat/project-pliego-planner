@@ -117,7 +117,7 @@ const CollapsibleSection = ({
         </div>
         {open ? <ChevronUp className="w-4 h-4 text-muted-foreground" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
       </button>
-      {open && <div className="px-6 pb-6 pt-2">{children}</div>}
+      {open && <div className="px-3 sm:px-6 pb-4 sm:pb-6 pt-2">{children}</div>}
     </div>
   );
 };
