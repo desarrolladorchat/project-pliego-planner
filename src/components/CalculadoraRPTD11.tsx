@@ -352,7 +352,7 @@ const CalculadoraRPTD11 = () => {
       </CollapsibleSection>
 
       {/* ── 2. Conductor ── */}
-      <CollapsibleSection title="2. Conductor de Fase" icon={Zap} badge="§5.10">
+      <CollapsibleSection title="2. Conductor de Fase" icon={Zap} badge="§5.10" defaultOpen={false}>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
           <InputField label="Tipo" value={conductor.tipo} onChange={(v) => setConductor({ ...conductor, tipo: v })} />
           <InputField label="Diámetro (Φ)" value={conductor.diametro} onChange={(v) => setConductor({ ...conductor, diametro: parseFloat(v) || 0 })} unit="mm" />
