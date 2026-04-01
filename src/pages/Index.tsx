@@ -34,15 +34,15 @@ const Index = () => {
       <header className="bg-card border-b border-border sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-primary text-primary-foreground">
-                <FileText className="w-5 h-5" />
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="p-1.5 sm:p-2 rounded-lg bg-primary text-primary-foreground flex-shrink-0">
+                <FileText className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
-              <div>
-                <h1 className="text-base font-bold text-foreground leading-tight">
+              <div className="min-w-0">
+                <h1 className="text-sm sm:text-base font-bold text-foreground leading-tight truncate">
                   Pliegos Técnicos Normativos
                 </h1>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-[10px] sm:text-xs text-muted-foreground truncate">
                   SEC — Superintendencia de Electricidad y Combustibles
                 </p>
               </div>

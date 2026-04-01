@@ -720,7 +720,7 @@ const CalculadoraFranja = () => {
       </CollapsibleSection>
 
       {/* 9. Resultado Final */}
-      <div className="bg-card rounded-xl p-6 shadow-sm border-2 border-primary/40">
+      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border-2 border-primary/40">
         <h3 className="eng-section-title">
           <Calculator className="w-5 h-5 text-primary" />
           9. Resultado — Franja de Seguridad
