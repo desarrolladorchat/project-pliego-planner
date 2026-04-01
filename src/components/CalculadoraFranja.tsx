@@ -621,6 +621,7 @@ const CalculadoraFranja = () => {
               unit="°"
               hint="0° = línea recta (Tr = 0)"
             />
+          </div>
         </div>
       </CollapsibleSection>
 
