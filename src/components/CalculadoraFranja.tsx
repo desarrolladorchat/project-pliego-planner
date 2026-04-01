@@ -1,6 +1,9 @@
 import { useState, useMemo } from "react";
 import { Calculator, Wind, Ruler, Zap, Settings, ChevronDown, ChevronUp, Info } from "lucide-react";
 
+// Safe number formatting helper
+const fmt = (v: number | undefined | null, d = 2) => Number(v ?? 0).toFixed(d);
+
 // Default values from Monteaguila 220 kV project
 const defaultProject = {
   projectName: "Nueva S/E Seccionadora Monteaguila 220 kV",
@@ -319,7 +322,7 @@ const CalculadoraFranja = () => {
             { label: "FS", value: calc.FS, unit: "m", color: "text-primary" },
           ].map((r) => (
             <div key={r.label} className={`rounded-lg p-2 sm:p-3 text-center ${r.label === "FS" ? "bg-primary/10 border border-primary/30" : "bg-muted/50"}`}>
-              <p className={`text-base sm:text-xl font-bold font-mono ${r.color}`}>{r.value.toFixed(2)}</p>
+              <p className={`text-base sm:text-xl font-bold font-mono ${r.color}`}>{fmt(r.value, 2)}</p>
               <p className="text-[10px] sm:text-xs text-muted-foreground mt-0.5 sm:mt-1">
                 {r.label === "FS" ? "FS" : r.label} <span className="hidden sm:inline">[{r.unit}]</span>
               </p>
@@ -328,11 +331,11 @@ const CalculadoraFranja = () => {
         </div>
         <div className="eng-formula mt-3 sm:mt-4">
           <p className="text-center text-[10px] sm:text-sm leading-relaxed">
-            <strong>D<sub>eL</sub></strong> = {calc.dE.toFixed(2)} + {calc.df.toFixed(2)} + {calc.dc.toFixed(2)} + {calc.ds.toFixed(2)} = <strong>{calc.DeL.toFixed(2)} m</strong>
+            <strong>D<sub>eL</sub></strong> = {fmt(calc.dE, 2)} + {fmt(calc.df, 2)} + {fmt(calc.dc, 2)} + {fmt(calc.ds, 2)} = <strong>{fmt(calc.DeL, 2)} m</strong>
             <br className="sm:hidden" />
             <span className="hidden sm:inline">&nbsp;&nbsp;→&nbsp;&nbsp;</span>
             <span className="sm:hidden">→ </span>
-            <strong>FS</strong> = 2 × {calc.DeL.toFixed(2)} = <strong className="text-primary">{calc.FS.toFixed(2)} m</strong>
+            <strong>FS</strong> = 2 × {fmt(calc.DeL, 2)} = <strong className="text-primary">{fmt(calc.FS, 2)} m</strong>
           </p>
         </div>
       </div>
@@ -469,7 +472,7 @@ const CalculadoraFranja = () => {
             <p className="text-sm">
               <strong>Corrección por altitud (§4.6 / §5.6):</strong> Incremento del 3% cada 300 m sobre 1.000 m.s.n.m.
               <br />
-              ds corregida: {calc.dsBase.toFixed(2)} × (1 + {(Math.floor((ambiente.altitud - 1000) / 300) * 0.03).toFixed(2)}) = <strong>{calc.ds.toFixed(2)} m</strong>
+              ds corregida: {fmt(calc.dsBase, 2)} × (1 + {(Math.floor((ambiente.altitud - 1000) / 300) * 0.03).toFixed(2)}) = <strong>{fmt(calc.ds, 2)} m</strong>
             </p>
           </div>
         )}
@@ -632,7 +635,7 @@ const CalculadoraFranja = () => {
             <strong>d<sub>E</sub></strong> = máx(Ancho cruceta inicio, Ancho cruceta fin)
           </p>
           <p className="text-sm">
-            d<sub>E</sub> = máx({vano.anchoCrucetaInicio.toFixed(2)}, {vano.anchoCrucetaFin.toFixed(2)}) = <strong className="text-primary">{calc.dE.toFixed(2)} m</strong>
+            d<sub>E</sub> = máx({fmt(vano.anchoCrucetaInicio, 2)}, {fmt(vano.anchoCrucetaFin, 2)}) = <strong className="text-primary">{fmt(calc.dE, 2)} m</strong>
           </p>
         </div>
         <div className="eng-note">
@@ -667,7 +670,7 @@ const CalculadoraFranja = () => {
                 <tr>
                   <td className="font-mono font-semibold">P<sub>v</sub></td>
                   <td>Presión de viento × Factor reducción</td>
-                  <td className="font-mono">{presionViento} × {calc.fr} = {calc.pvEfectiva.toFixed(1)}</td>
+                  <td className="font-mono">{presionViento} × {calc.fr} = {fmt(calc.pvEfectiva, 1)}</td>
                   <td>kg/m²</td>
                 </tr>
                 <tr>
@@ -679,7 +682,7 @@ const CalculadoraFranja = () => {
                 <tr>
                   <td className="font-mono font-semibold">P<sub>C</sub></td>
                   <td>Peso del conductor</td>
-                  <td className="font-mono">{conductor.peso.toFixed(4)}</td>
+                  <td className="font-mono">{fmt(conductor.peso, 4)}</td>
                   <td>kg/m</td>
                 </tr>
                 <tr>
@@ -691,13 +694,13 @@ const CalculadoraFranja = () => {
                 <tr>
                   <td className="font-mono font-semibold">tan(α<sub>C</sub>)</td>
                   <td>Tangente del ángulo</td>
-                  <td className="font-mono font-semibold">{calc.tanAlphaC.toFixed(4)}</td>
+                  <td className="font-mono font-semibold">{fmt(calc.tanAlphaC, 4)}</td>
                   <td>—</td>
                 </tr>
                 <tr>
                   <td className="font-mono font-semibold">α<sub>C</sub></td>
                   <td>Ángulo de desviación del conductor</td>
-                  <td className="font-mono font-semibold text-primary">{calc.alphaCDeg.toFixed(2)}</td>
+                  <td className="font-mono font-semibold text-primary">{fmt(calc.alphaCDeg, 2)}</td>
                   <td>°</td>
                 </tr>
               </tbody>
@@ -707,7 +710,7 @@ const CalculadoraFranja = () => {
           <div className="eng-formula">
             <p className="text-sm mb-1"><strong>Proyección horizontal:</strong></p>
             <p className="text-center text-sm">
-              d<sub>f</sub> = Flecha × sin(α<sub>C</sub>) = {vano.flecha.toFixed(2)} × sin({calc.alphaCDeg.toFixed(2)}°) = <strong className="text-primary">{calc.df.toFixed(2)} m</strong>
+              d<sub>f</sub> = Flecha × sin(α<sub>C</sub>) = {fmt(vano.flecha, 2)} × sin({fmt(calc.alphaCDeg, 2)}°) = <strong className="text-primary">{fmt(calc.df, 2)} m</strong>
             </p>
           </div>
         </div>
@@ -735,7 +738,7 @@ const CalculadoraFranja = () => {
             <div className="eng-note">
               <p className="text-sm mb-1"><strong>Cálculo de T<sub>r</sub> — Resultante de tensiones mecánicas:</strong></p>
               <p className="text-center text-sm">
-                T<sub>r</sub> = 2 × {project.numConductoresFase} × {vano.Tc.toFixed(1)} × sin({vano.anguloLinea.toFixed(1)}°/2) = <strong className="text-primary">{calc.Tr.toFixed(2)} kg</strong>
+                T<sub>r</sub> = 2 × {project.numConductoresFase} × {fmt(vano.Tc, 1)} × sin({fmt(vano.anguloLinea, 1)}°/2) = <strong className="text-primary">{fmt(calc.Tr, 2)} kg</strong>
               </p>
               {vano.anguloLinea === 0 && (
                 <p className="text-xs text-muted-foreground mt-1">
@@ -760,7 +763,7 @@ const CalculadoraFranja = () => {
                   <tr><td className="font-mono">d<sub>a</sub></td><td>Diámetro disco aislador</td><td className="font-mono">{vano.diametroAislador}</td><td>mm</td></tr>
                   <tr><td className="font-mono">L<sub>c</sub></td><td>Longitud cadena aisladores</td><td className="font-mono">{vano.largoCadena}</td><td>m</td></tr>
                   <tr><td className="font-mono">Q<sub>va</sub></td><td>Presión viento aisladores</td><td className="font-mono">{vano.Qva}</td><td>kg/m²</td></tr>
-                  <tr className="border-t-2 border-primary/30"><td className="font-mono font-semibold">T<sub>r</sub></td><td>Resultante tensiones mecánicas</td><td className="font-mono font-semibold text-primary">{calc.Tr.toFixed(2)}</td><td>kg</td></tr>
+                  <tr className="border-t-2 border-primary/30"><td className="font-mono font-semibold">T<sub>r</sub></td><td>Resultante tensiones mecánicas</td><td className="font-mono font-semibold text-primary">{fmt(calc.Tr, 2)}</td><td>kg</td></tr>
                   <tr><td className="font-mono">R<sub>vp</sub></td><td>Relación Lv/Lp</td><td className="font-mono">{vano.Rvp}</td><td>—</td></tr>
                   <tr><td className="font-mono">p</td><td>Peso unitario subconductor</td><td className="font-mono">{conductor.peso}</td><td>kg/m</td></tr>
                   <tr><td className="font-mono">N<sub>a</sub></td><td>N° aisladores por cadena</td><td className="font-mono">{vano.Na}</td><td>—</td></tr>
@@ -769,19 +772,19 @@ const CalculadoraFranja = () => {
                   <tr><td className="font-mono">δ</td><td>Ángulo de la línea</td><td className="font-mono">{vano.anguloLinea}</td><td>°</td></tr>
                   <tr className="border-t-2 border-primary/30">
                     <td className="font-mono font-semibold">Numerador</td><td>—</td>
-                    <td className="font-mono font-semibold">{calc.numeradorCadena.toFixed(4)}</td><td>—</td>
+                    <td className="font-mono font-semibold">{fmt(calc.numeradorCadena, 4)}</td><td>—</td>
                   </tr>
                   <tr>
                     <td className="font-mono font-semibold">Denominador</td><td>—</td>
-                    <td className="font-mono font-semibold">{calc.denominadorCadena.toFixed(4)}</td><td>—</td>
+                    <td className="font-mono font-semibold">{fmt(calc.denominadorCadena, 4)}</td><td>—</td>
                   </tr>
                   <tr>
                     <td className="font-mono font-semibold">tan(α)</td><td>—</td>
-                    <td className="font-mono font-semibold">{calc.tanAlphaCadena.toFixed(6)}</td><td>—</td>
+                    <td className="font-mono font-semibold">{fmt(calc.tanAlphaCadena, 6)}</td><td>—</td>
                   </tr>
                   <tr>
                     <td className="font-mono font-semibold">α<sub>cadena</sub></td><td>Ángulo de desviación</td>
-                    <td className="font-mono font-semibold text-primary">{calc.alphaCadenaDeg.toFixed(2)}</td>
+                    <td className="font-mono font-semibold text-primary">{fmt(calc.alphaCadenaDeg, 2)}</td>
                     <td>°</td>
                   </tr>
                 </tbody>
@@ -790,7 +793,7 @@ const CalculadoraFranja = () => {
 
             <div className="eng-formula">
               <p className="text-center text-sm">
-                d<sub>c</sub> = L<sub>c</sub> × sin(α<sub>cadena</sub>) = {vano.largoCadena.toFixed(2)} × sin({calc.alphaCadenaDeg.toFixed(2)}°) = <strong className="text-primary">{calc.dc.toFixed(2)} m</strong>
+                d<sub>c</sub> = L<sub>c</sub> × sin(α<sub>cadena</sub>) = {fmt(vano.largoCadena, 2)} × sin({fmt(calc.alphaCadenaDeg, 2)}°) = <strong className="text-primary">{fmt(calc.dc, 2)} m</strong>
               </p>
             </div>
           </div>
@@ -827,7 +830,7 @@ const CalculadoraFranja = () => {
         <div className="eng-formula">
           <p className="text-sm">
             Para tensión nominal de <strong>{project.tensionNominal} kV</strong>:
-            d<sub>s</sub> = <strong className="text-primary">{calc.ds.toFixed(2)} m</strong>
+            d<sub>s</sub> = <strong className="text-primary">{fmt(calc.ds, 2)} m</strong>
             {ambiente.altitud > 1000 && (
               <span className="text-engineering-warning"> (corregida por altitud)</span>
             )}
@@ -847,10 +850,10 @@ const CalculadoraFranja = () => {
             <strong>D<sub>eL</sub></strong> = d<sub>E</sub> + d<sub>f</sub> + d<sub>c</sub> + d<sub>s</sub>
           </p>
           <p className="text-center text-sm mb-3">
-            D<sub>eL</sub> = {calc.dE.toFixed(2)} + {calc.df.toFixed(2)} + {calc.dc.toFixed(2)} + {calc.ds.toFixed(2)} = <strong>{calc.DeL.toFixed(2)} m</strong>
+            D<sub>eL</sub> = {fmt(calc.dE, 2)} + {fmt(calc.df, 2)} + {fmt(calc.dc, 2)} + {fmt(calc.ds, 2)} = <strong>{fmt(calc.DeL, 2)} m</strong>
           </p>
           <p className="text-center text-lg font-bold text-primary">
-            Franja de Seguridad (FS) = 2 × D<sub>eL</sub> = 2 × {calc.DeL.toFixed(2)} = {calc.FS.toFixed(2)} m
+            Franja de Seguridad (FS) = 2 × D<sub>eL</sub> = 2 × {fmt(calc.DeL, 2)} = {fmt(calc.FS, 2)} m
           </p>
         </div>
 
@@ -868,37 +871,37 @@ const CalculadoraFranja = () => {
               <tr>
                 <td className="font-semibold">d<sub>E</sub></td>
                 <td>Máx. ancho cruceta</td>
-                <td className="font-mono font-semibold">{calc.dE.toFixed(2)} m</td>
+                <td className="font-mono font-semibold">{fmt(calc.dE, 2)} m</td>
                 <td className="text-xs">RPTD N°07 §4.1</td>
               </tr>
               <tr>
                 <td className="font-semibold">d<sub>f</sub></td>
-                <td>Flecha × sin(α<sub>C</sub>) = {vano.flecha.toFixed(2)} × sin({calc.alphaCDeg.toFixed(2)}°)</td>
-                <td className="font-mono font-semibold">{calc.df.toFixed(2)} m</td>
+                <td>Flecha × sin(α<sub>C</sub>) = {fmt(vano.flecha, 2)} × sin({fmt(calc.alphaCDeg, 2)}°)</td>
+                <td className="font-mono font-semibold">{fmt(calc.df, 2)} m</td>
                 <td className="text-xs">RPTD N°07 §4.3</td>
               </tr>
               <tr>
                 <td className="font-semibold">d<sub>c</sub></td>
-                <td>{vano.tipoCadena === "anclaje" ? "Cadena anclaje → 0" : `Lc × sin(α) = ${vano.largoCadena.toFixed(2)} × sin(${calc.alphaCadenaDeg.toFixed(2)}°)`}</td>
-                <td className="font-mono font-semibold">{calc.dc.toFixed(2)} m</td>
+                <td>{vano.tipoCadena === "anclaje" ? "Cadena anclaje → 0" : `Lc × sin(α) = ${fmt(vano.largoCadena, 2)} × sin(${fmt(calc.alphaCadenaDeg, 2)}°)`}</td>
+                <td className="font-mono font-semibold">{fmt(calc.dc, 2)} m</td>
                 <td className="text-xs">RPTD N°07 §4.3</td>
               </tr>
               <tr>
                 <td className="font-semibold">d<sub>s</sub></td>
                 <td>Tabla N°3 ({project.tensionNominal} kV){ambiente.altitud > 1000 ? " + corr. altitud" : ""}</td>
-                <td className="font-mono font-semibold">{calc.ds.toFixed(2)} m</td>
+                <td className="font-mono font-semibold">{fmt(calc.ds, 2)} m</td>
                 <td className="text-xs">RPTD N°07 §4.5</td>
               </tr>
               <tr className="!bg-primary/5">
                 <td className="font-bold text-primary">D<sub>eL</sub></td>
                 <td className="font-semibold">d<sub>E</sub> + d<sub>f</sub> + d<sub>c</sub> + d<sub>s</sub></td>
-                <td className="font-mono font-bold text-primary text-lg">{calc.DeL.toFixed(2)} m</td>
+                <td className="font-mono font-bold text-primary text-lg">{fmt(calc.DeL, 2)} m</td>
                 <td className="text-xs">RPTD N°07 §4.2</td>
               </tr>
               <tr className="!bg-primary/10">
                 <td className="font-bold text-primary">FS</td>
                 <td className="font-semibold">2 × D<sub>eL</sub></td>
-                <td className="font-mono font-bold text-primary text-lg">{calc.FS.toFixed(2)} m</td>
+                <td className="font-mono font-bold text-primary text-lg">{fmt(calc.FS, 2)} m</td>
                 <td className="text-xs">RPTD N°07 §4.2</td>
               </tr>
             </tbody>
