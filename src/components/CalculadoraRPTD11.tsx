@@ -730,6 +730,51 @@ const CalculadoraRPTD11 = () => {
           </p>
         </div>
       </CollapsibleSection>
+
+      {/* ── Resumen de Cálculos — Pliego N°11 ── */}
+      <CollapsibleSection title="Resumen de Cálculos — Pliego N°11" icon={Calculator} badge="Verificación">
+        <div className="overflow-x-auto">
+          <table className="eng-table">
+            <thead>
+              <tr>
+                <th className="min-w-[220px]">Parámetro</th>
+                <th className="text-right min-w-[100px]">Valor</th>
+                <th>Unidad</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                { param: "Zona Geográfica", value: ambiente.zona === "custom" ? "Personalizada" : `Zona ${ambiente.zona}`, unit: "", isText: true },
+                { param: "Altura de Fijación (hc)", value: estructura.alturaConductor, unit: "m", decimals: 1 },
+                { param: "Tipo de Estructura", value: estructura.tipo === "reticulada" ? "RETICULADA" : estructura.tipo === "poste_hormigon" ? "POSTE HORMIGÓN" : estructura.tipo === "poste_metalico" ? "POSTE METÁLICO" : "POSTE CIRCULAR", unit: "", isText: true },
+                { param: "Presión Base (Pv)", value: presionViento, unit: "kg/m²", decimals: 2 },
+                { param: "Factor Gc (Amplificación)", value: calc.Gc, unit: "", decimals: 4 },
+                { param: "Presión Amplificada (qc)", value: calc.qc, unit: "kg/m²", decimals: 2 },
+                { param: "Factor de Forma (Cf)", value: calc.Cf, unit: "", decimals: 2 },
+                { param: "Factor de Turbulencia (Gt)", value: calc.Gt, unit: "", decimals: 2 },
+                { param: "Fuerza de Viento (Fz)", value: calc.Fz, unit: "kg", decimals: 2, highlight: true },
+                { param: "Coeficiente de Seguridad", value: calc.csNormal, unit: "", decimals: 2 },
+                { param: "Tensión Máx. 50% Trupt", value: calc.tensionMax50, unit: "kg", decimals: 0 },
+                { param: "Tensión Máx. 70% Trupt", value: calc.tensionMax70, unit: "kg", decimals: 0 },
+                { param: "Viento sobre Conductor", value: calc.fuerzaVientoConductor, unit: "kg", decimals: 2 },
+                { param: "Cortadura Conductor", value: calc.cortaduraCond, unit: "kg", decimals: 2 },
+                { param: "Fuerza Angular Conductor", value: calc.fuerzaAnguloCond, unit: "kg", decimals: 2 },
+                { param: "Separación Paralelismo", value: calc.separacionParalelismo, unit: "m", decimals: 2 },
+              ].map((row, i) => (
+                <tr key={i} className={row.highlight ? "!bg-primary/5" : ""}>
+                  <td className={`font-semibold ${row.highlight ? "text-primary" : ""}`}>{row.param}</td>
+                  <td className="text-right">
+                    <span className={`font-mono font-bold ${row.highlight ? "text-primary text-lg" : ""}`}>
+                      {(row as any).isText ? (row.value as string) : fmt(row.value as number, (row as any).decimals ?? 2)}
+                    </span>
+                  </td>
+                  <td className="text-xs text-muted-foreground">{row.unit}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </CollapsibleSection>
     </div>
   );
 };

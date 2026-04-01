@@ -264,6 +264,19 @@ const CalculadoraFranja = () => {
     // Franja de seguridad = 2 × DeL
     const FS = 2 * DeL;
 
+    // Altura mínima transitable (Tab 5 / Tab 8): 6.5 + 0.006 × kV
+    const alturaMinTransitable = 6.5 + 0.006 * project.tensionNominal;
+
+    // Separación fase-fase (Pto 5.4): 0.36 × √f + kV/130 + 0.5 × C
+    const C = conductor.diametro / 1000; // diámetro en metros
+    const separacionFF = 0.36 * Math.sqrt(vano.flecha) + project.tensionNominal / 130 + 0.5 * C;
+
+    // Factor Gc (mismo que RPTD 11, simplificado)
+    const Gc = 1.0; // RPTD 07 no define Gc explícitamente, se asume 1.0
+
+    // Corrección altitud factor Ka
+    const Ka = ambiente.altitud > 1000 ? 1 + Math.floor((ambiente.altitud - 1000) / 300) * 0.03 : 1.0;
+
     return {
       fr,
       pvEfectiva,
@@ -283,6 +296,10 @@ const CalculadoraFranja = () => {
       ds,
       DeL,
       FS,
+      alturaMinTransitable,
+      separacionFF,
+      Gc,
+      Ka,
     };
   }, [project, conductor, ambiente, vano, presionViento]);
 
@@ -904,10 +921,108 @@ const CalculadoraFranja = () => {
                 <td className="font-mono font-bold text-primary text-lg">{fmt(calc.FS, 2)} m</td>
                 <td className="text-xs">RPTD N°07 §4.2</td>
               </tr>
+             </tbody>
+           </table>
+         </div>
+       </div>
+
+      {/* ── Lista de Verificación RPTD N°07 ── */}
+      <CollapsibleSection title="Lista de Verificación RPTD N°07" icon={Info} badge="Resumen">
+        <p className="text-xs text-muted-foreground mb-4">Resumen de parámetros calculados</p>
+        <div className="overflow-x-auto">
+          <table className="eng-table">
+            <thead>
+              <tr>
+                <th className="min-w-[200px]">Parámetro</th>
+                <th>Referencia</th>
+                <th>Ecuación</th>
+                <th className="text-right min-w-[120px]">Resultado</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                {
+                  param: <>Franja de Servidumbre (D<sub>eL</sub>)</>,
+                  ref: "Pto 4.2",
+                  eq: <>d<sub>E</sub> + d<sub>f</sub> + d<sub>c</sub> + (d<sub>s</sub> · K<sub>a</sub>)</>,
+                  value: calc.DeL,
+                  unit: "m",
+                  highlight: true,
+                },
+                {
+                  param: <>Desviación de Flecha (d<sub>f</sub>)</>,
+                  ref: "Pto 4.3",
+                  eq: <>f · sin(α<sub>c</sub>)</>,
+                  value: calc.df,
+                  unit: "m",
+                },
+                {
+                  param: <>Desviación de Cadena (d<sub>c</sub>)</>,
+                  ref: "Pto 4.3",
+                  eq: <>L<sub>c</sub> · sin(α<sub>cs</sub>)</>,
+                  value: calc.dc,
+                  unit: "m",
+                },
+                {
+                  param: "Altura Mínima Transitable",
+                  ref: "Tab 5 / Tab 8",
+                  eq: "6.5 + 0.006·kV",
+                  value: calc.alturaMinTransitable,
+                  unit: "m",
+                },
+                {
+                  param: "Separación Fase-Fase (S)",
+                  ref: "Pto 5.4",
+                  eq: <>0.36·√f + (kV/130) + 0.5·C</>,
+                  value: calc.separacionFF,
+                  unit: "m",
+                },
+                {
+                  param: <>Factor Viento (G<sub>c</sub>)</>,
+                  ref: "Pto 4.3.b",
+                  eq: "Func(hc)",
+                  value: calc.Gc,
+                  unit: "u",
+                },
+                {
+                  param: <>Distancia de Seguridad (d<sub>s</sub>)</>,
+                  ref: "Pto 4.5 / Tab 3",
+                  eq: "Según tensión nominal",
+                  value: calc.ds,
+                  unit: "m",
+                },
+                {
+                  param: <>Corrección Altitud (K<sub>a</sub>)</>,
+                  ref: "Pto 4.5",
+                  eq: "1 + 3%/300m (>1000 m)",
+                  value: calc.Ka,
+                  unit: "",
+                },
+                {
+                  param: "Franja Total (FS = 2×DeL)",
+                  ref: "Pto 4.2",
+                  eq: <>2 × D<sub>eL</sub></>,
+                  value: calc.FS,
+                  unit: "m",
+                  highlight: true,
+                },
+              ].map((row, i) => (
+                <tr key={i} className={row.highlight ? "!bg-primary/5" : ""}>
+                  <td className={`font-semibold ${row.highlight ? "text-primary" : ""}`}>{row.param}</td>
+                  <td className="text-xs text-muted-foreground">{row.ref}</td>
+                  <td className="font-mono text-xs" style={{ color: "hsl(var(--engineering-info))" }}>{row.eq}</td>
+                  <td className="text-right">
+                    <span className={`font-mono font-bold ${row.highlight ? "text-primary text-lg" : ""}`}>
+                      {fmt(row.value, 3)}
+                    </span>
+                    {row.unit && <span className="text-xs text-muted-foreground ml-1">{row.unit}</span>}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
-      </div>
+      </CollapsibleSection>
     </div>
   );
 };
