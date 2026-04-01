@@ -206,9 +206,15 @@ const CalculadoraFranja = () => {
   const [ambiente, setAmbiente] = useState(defaultAmbiente);
   const [vano, setVano] = useState(defaultVano);
 
-  // Auto-update wind pressure when zone changes
-  const presionViento = useMemo(() => getPresionVientoZona(ambiente.zona), [ambiente.zona]);
-  const tempAmbienteZona = useMemo(() => getTempAmbienteZona(ambiente.zona), [ambiente.zona]);
+  // Auto-update wind pressure when zone changes (or use custom values)
+  const presionViento = useMemo(() =>
+    ambiente.zona === "custom" ? ambiente.presionViento : getPresionVientoZona(ambiente.zona as "II" | "III"),
+    [ambiente.zona, ambiente.presionViento]
+  );
+  const tempAmbienteZona = useMemo(() =>
+    ambiente.zona === "custom" ? ambiente.tempAmbiente : getTempAmbienteZona(ambiente.zona as "II" | "III"),
+    [ambiente.zona, ambiente.tempAmbiente]
+  );
 
   const calc = useMemo(() => {
     // Factor de reducción por vano
