@@ -1,4 +1,25 @@
-import { BookOpen, AlertTriangle, Ruler, Wind, Zap, TreePine, Building2, Lightbulb } from "lucide-react";
+import { useState } from "react";
+import { BookOpen, AlertTriangle, Ruler, Wind, Zap, TreePine, Building2, Lightbulb, ChevronDown, ChevronUp } from "lucide-react";
+
+const CollapsibleSection = ({
+  title, icon: Icon, children, defaultOpen = false,
+}: {
+  title: string; icon: React.ElementType; children: React.ReactNode; defaultOpen?: boolean;
+}) => {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div className="bg-card rounded-xl shadow-sm border border-border overflow-hidden">
+      <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between px-3 sm:px-6 py-3 sm:py-4 hover:bg-muted/30 transition-colors">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <div className="p-1.5 sm:p-2 rounded-lg bg-primary/10 flex-shrink-0"><Icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" /></div>
+          <h3 className="text-sm sm:text-base font-bold text-foreground truncate">{title}</h3>
+        </div>
+        {open ? <ChevronUp className="w-4 h-4 text-muted-foreground" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
+      </button>
+      {open && <div className="px-3 sm:px-6 pb-4 sm:pb-6 pt-2">{children}</div>}
+    </div>
+  );
+};
 
 const PliegoRPTD07 = () => {
   return (
@@ -24,29 +45,18 @@ const PliegoRPTD07 = () => {
       </div>
 
       {/* 1. Objetivo y Alcance */}
-      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
-        <h3 className="eng-section-title">
-          <BookOpen className="w-5 h-5 text-primary" />
-          1. Objetivo
-        </h3>
+      <CollapsibleSection title="1 – 2. Objetivo y Alcance" icon={BookOpen}>
         <p className="text-foreground/80 leading-relaxed">
           Definir la franja y las distancias de seguridad de las líneas de transporte y de distribución de energía eléctrica, incluyendo las de alumbrado público.
         </p>
-        <h3 className="eng-section-title mt-6">
-          <BookOpen className="w-5 h-5 text-primary" />
-          2. Alcance
-        </h3>
+        <h4 className="eng-subsection-title mt-4">2. Alcance</h4>
         <p className="text-foreground/80 leading-relaxed">
           Este pliego técnico aplica a las líneas de transporte y de distribución de energía eléctrica.
         </p>
-      </div>
+      </CollapsibleSection>
 
       {/* 3. Terminología */}
-      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
-        <h3 className="eng-section-title">
-          <BookOpen className="w-5 h-5 text-primary" />
-          3. Terminología y Definiciones
-        </h3>
+      <CollapsibleSection title="3. Terminología y Definiciones" icon={BookOpen}>
         <div className="space-y-3">
           {[
             { term: "3.1. Distancia de seguridad", def: "Distancia a un conductor energizado, que minimiza el riesgo de accidente de personas por acercamiento, o una descarga a elementos a potencial cero." },
@@ -60,15 +70,10 @@ const PliegoRPTD07 = () => {
             </div>
           ))}
         </div>
-      </div>
+      </CollapsibleSection>
 
       {/* 4. Franja de Seguridad */}
-      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
-        <h3 className="eng-section-title">
-          <Ruler className="w-5 h-5 text-primary" />
-          4. Franja de Seguridad
-        </h3>
-
+      <CollapsibleSection title="4. Franja de Seguridad" icon={Ruler}>
         {/* 4.1 - 4.2 Fórmula principal */}
         <div className="mb-6">
           <h4 className="eng-subsection-title">4.1 – 4.2 Cálculo de D<sub>eL</sub></h4>
@@ -265,15 +270,10 @@ const PliegoRPTD07 = () => {
             <p className="text-sm"><strong>Árboles (4.10):</strong> Distancia vertical mínima: <strong>2,00 m</strong> (BT/MT) o <strong>2,50 m + 0,01 m/kV</strong> (AT/EAT), en flecha máxima a 15°C.</p>
           </div>
         </div>
-      </div>
+      </CollapsibleSection>
 
       {/* 5. Distancias de seguridad > 23 kV */}
-      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
-        <h3 className="eng-section-title">
-          <Zap className="w-5 h-5 text-primary" />
-          5. Distancias de Seguridad en Líneas Aéreas &gt; 23 kV
-        </h3>
-
+      <CollapsibleSection title="5. Distancias de Seguridad > 23 kV" icon={Zap}>
         {/* 5.2 Tabla N°4 */}
         <div className="mb-6">
           <h4 className="eng-subsection-title">5.2 Distancia Mínima a Estructuras – Tabla N° 4</h4>
@@ -387,15 +387,10 @@ const PliegoRPTD07 = () => {
             </div>
           </div>
         </div>
-      </div>
+      </CollapsibleSection>
 
       {/* 6. Distancias ≤ 23 kV */}
-      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
-        <h3 className="eng-section-title">
-          <Building2 className="w-5 h-5 text-primary" />
-          6. Distancias de Seguridad en Líneas ≤ 23 kV
-        </h3>
-
+      <CollapsibleSection title="6. Distancias de Seguridad ≤ 23 kV" icon={Building2}>
         <div className="mb-6">
           <h4 className="eng-subsection-title">6.1 Separación Horizontal Mínima en Soportes Fijos</h4>
           <div className="overflow-x-auto">
@@ -469,14 +464,10 @@ const PliegoRPTD07 = () => {
             </table>
           </div>
         </div>
-      </div>
+      </CollapsibleSection>
 
       {/* 7. Alumbrado Público */}
-      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border">
-        <h3 className="eng-section-title">
-          <Lightbulb className="w-5 h-5 text-primary" />
-          7. Distancias Mínimas de Seguridad en Alumbrado Público
-        </h3>
+      <CollapsibleSection title="7. Distancias Mínimas – Alumbrado Público" icon={Lightbulb}>
         <div className="overflow-x-auto">
           <table className="eng-table">
             <thead>
@@ -488,7 +479,7 @@ const PliegoRPTD07 = () => {
             </tbody>
           </table>
         </div>
-      </div>
+      </CollapsibleSection>
     </div>
   );
 };
