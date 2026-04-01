@@ -95,6 +95,7 @@ const Index = () => {
         {activeTab === "rptd07" && <PliegoRPTD07 />}
         {activeTab === "rptd11" && <PliegoRPTD11 />}
         {activeTab === "calculadora" && <CalculadoraFranja />}
+        {activeTab === "calculadora11" && <CalculadoraRPTD11 />}
       </main>
 
       {/* Footer */}
