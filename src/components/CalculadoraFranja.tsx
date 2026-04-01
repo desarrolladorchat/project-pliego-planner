@@ -308,10 +308,12 @@ const CalculadoraFranja = () => {
             </div>
           ))}
         </div>
-        <div className="eng-formula mt-4">
-          <p className="text-center text-sm">
+        <div className="eng-formula mt-3 sm:mt-4">
+          <p className="text-center text-[10px] sm:text-sm leading-relaxed">
             <strong>D<sub>eL</sub></strong> = {calc.dE.toFixed(2)} + {calc.df.toFixed(2)} + {calc.dc.toFixed(2)} + {calc.ds.toFixed(2)} = <strong>{calc.DeL.toFixed(2)} m</strong>
-            &nbsp;&nbsp;→&nbsp;&nbsp;
+            <br className="sm:hidden" />
+            <span className="hidden sm:inline">&nbsp;&nbsp;→&nbsp;&nbsp;</span>
+            <span className="sm:hidden">→ </span>
             <strong>FS</strong> = 2 × {calc.DeL.toFixed(2)} = <strong className="text-primary">{calc.FS.toFixed(2)} m</strong>
           </p>
         </div>
