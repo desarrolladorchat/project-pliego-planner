@@ -357,14 +357,48 @@ const CalculadoraRPTD11 = () => {
             options={[
               { value: "II", label: "Zona II — Costera (50 kg/m²)" },
               { value: "III", label: "Zona III — Interior (40 kg/m²)" },
+              { value: "custom", label: "Personalizada — Definida por usuario" },
             ]}
-            onChange={(v) => setAmbiente({ ...ambiente, zona: v as "II" | "III" })}
+            onChange={(v) => {
+              const newZona = v as "II" | "III" | "custom";
+              if (newZona === "custom") {
+                setAmbiente({ ...ambiente, zona: newZona });
+              } else {
+                setAmbiente({
+                  ...ambiente,
+                  zona: newZona,
+                  presionViento: getPresionViento(newZona),
+                  tempAmbiente: getTempAmbiente(newZona),
+                });
+              }
+            }}
           />
-          <InputField label="Presión de Viento (auto)" value={presionViento} readOnly unit="kg/m²" hint="Según zona" />
-          <InputField label="Temperatura Ambiente (auto)" value={tempAmbiente} readOnly unit="°C" />
+          <InputField
+            label={ambiente.zona === "custom" ? "Presión de Viento" : "Presión de Viento (auto)"}
+            value={ambiente.zona === "custom" ? ambiente.presionViento : presionViento}
+            onChange={ambiente.zona === "custom" ? (v) => setAmbiente({ ...ambiente, presionViento: parseFloat(v) || 0 }) : undefined}
+            readOnly={ambiente.zona !== "custom"}
+            unit="kg/m²"
+            hint={ambiente.zona === "custom" ? "Definido por usuario" : "Según zona"}
+          />
+          <InputField
+            label={ambiente.zona === "custom" ? "Temperatura Ambiente" : "Temperatura Ambiente (auto)"}
+            value={ambiente.zona === "custom" ? ambiente.tempAmbiente : tempAmbiente}
+            onChange={ambiente.zona === "custom" ? (v) => setAmbiente({ ...ambiente, tempAmbiente: parseFloat(v) || 0 }) : undefined}
+            readOnly={ambiente.zona !== "custom"}
+            unit="°C"
+            hint={ambiente.zona === "custom" ? "Definido por usuario" : "Según zona"}
+          />
           <InputField label="Altitud" value={ambiente.altitud} onChange={(v) => setAmbiente({ ...ambiente, altitud: parseFloat(v) || 0 })} unit="m.s.n.m." />
           <InputField label="Espesor Manguito de Hielo" value={ambiente.espHielo} onChange={(v) => setAmbiente({ ...ambiente, espHielo: parseFloat(v) || 0 })} unit="mm" hint="0 para Zonas II y III" />
         </div>
+        {ambiente.zona === "custom" && (
+          <div className="eng-note mt-4">
+            <p className="text-xs"><Info className="w-3 h-3 inline mr-1" />
+              <strong>Modo personalizado:</strong> Los valores de presión de viento y temperatura son definidos manualmente. El factor G<sub>c</sub> utiliza la fórmula de Zona III por defecto.
+            </p>
+          </div>
+        )}
       </CollapsibleSection>
 
       {/* ── 5. Estructura de Soporte ── */}
