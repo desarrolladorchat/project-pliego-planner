@@ -97,10 +97,10 @@ const defaultCableGuardia = {
 };
 
 const defaultAmbiente = {
-  zona: "III" as "II" | "III",
+  zona: "III" as "II" | "III" | "custom",
   altitud: 131,
-  presionViento: 40,       // auto
-  tempAmbiente: 10,        // auto
+  presionViento: 40,       // auto or custom
+  tempAmbiente: 10,        // auto or custom
   espHielo: 0,             // mm — espesor manguito de hielo (Zona I/IV)
 };
 
