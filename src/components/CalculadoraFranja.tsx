@@ -46,9 +46,8 @@ const defaultVano = {
   numAislacionFase: 1,
   vanoViento: 293.72, // m
   vanoPeso: 293.72, // m
-  // Variables para fórmula completa tan(α) cadena (RPTD N°07)
-  k: 1.0, // coeficiente ≤ 1.0
-  Rvp: 1.0, // relación luz de viento / luz de peso
+   // Variables para fórmula completa tan(α) cadena (RPTD N°07)
+   k: 1.0, // coeficiente ≤ 1.0
   diametroAislador: 280, // mm — diámetro del disco del aislador
   Nca: 1, // número de cadenas de aisladores en paralelo
   Na: 14, // número de aisladores que forman cada cadena
