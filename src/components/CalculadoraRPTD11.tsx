@@ -130,8 +130,8 @@ const defaultCortadura = {
 
 // ── Helpers ─────────────────────────────────────────────────────────────
 
-function getPresionViento(zona: "II" | "III") { return zona === "II" ? 50 : 40; }
-function getTempAmbiente(zona: "II" | "III") { return zona === "II" ? 5 : 10; }
+function getPresionViento(zona: "II" | "III" | "custom") { if (zona === "custom") return 0; return zona === "II" ? 50 : 40; }
+function getTempAmbiente(zona: "II" | "III" | "custom") { if (zona === "custom") return 0; return zona === "II" ? 5 : 10; }
 
 function getGc(zona: "II" | "III", hc: number): number {
   if (hc <= 50) return 1.0;
