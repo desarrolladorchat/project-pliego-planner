@@ -459,7 +459,7 @@ const CalculadoraFranja = () => {
 
       {/* 4. Datos del Vano */}
       <CollapsibleSection title="4. Datos del Vano y Estructura" icon={Ruler} badge="Editable">
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
           <InputField
             label="Longitud del Vano"
             value={vano.longitudVano}
