@@ -46,9 +46,8 @@ const defaultVano = {
   numAislacionFase: 1,
   vanoViento: 293.72, // m
   vanoPeso: 293.72, // m
-  // Variables para fórmula completa tan(α) cadena (RPTD N°07)
-  k: 1.0, // coeficiente ≤ 1.0
-  Rvp: 1.0, // relación luz de viento / luz de peso
+   // Variables para fórmula completa tan(α) cadena (RPTD N°07)
+   k: 1.0, // coeficiente ≤ 1.0
   diametroAislador: 280, // mm — diámetro del disco del aislador
   Nca: 1, // número de cadenas de aisladores en paralelo
   Na: 14, // número de aisladores que forman cada cadena
@@ -250,8 +249,8 @@ const CalculadoraFranja = () => {
     // df = flecha × sin(αC)
     const df = vano.flecha * Math.sin(alphaCRad);
 
-    // Ángulo de desviación de la cadena de aisladores (fórmula completa RPTD N°07)
-    // tan(α) = [k × (Lv × Nsc × d × Qvc + 0.5 × Nca × da × Lc × Qva) × 10⁻³ + Tr] / [(Lv/Rvp) × Nsc × p + 0.5 × Nca × Na × Pa]
+     // Ángulo de desviación de la cadena de aisladores (fórmula completa RPTD N°07)
+     // tan(α) = [k × (Lv × Nsc × d × Qvc + 0.5 × Nca × da × Lc × Qva) × 10⁻³ + Tr] / [Lp × Nsc × p + 0.5 × Nca × Na × Pa]
     // Tr = 2 × Nsc × Tc × sin(δ/2)
     const fp = 1.2; // factor amplificación (legacy display)
     const ncp = project.numConductoresFase; // Nsc
@@ -264,9 +263,9 @@ const CalculadoraFranja = () => {
         0.5 * vano.Nca * (vano.diametroAislador / 1000) * vano.largoCadena * vano.Qva
       ) + Tr; // ×10⁻³ already handled by using meters for d
 
-    const denominadorCadena =
-      (vano.vanoViento / vano.Rvp) * ncp * conductor.peso +
-      0.5 * vano.Nca * vano.Na * vano.pesoUnitarioAislador;
+     const denominadorCadena =
+       vano.vanoPeso * ncp * conductor.peso +
+       0.5 * vano.Nca * vano.Na * vano.pesoUnitarioAislador;
 
     const tanAlphaCadena = numeradorCadena / denominadorCadena;
     const alphaCadenaRad = Math.atan(tanAlphaCadena);
@@ -621,12 +620,6 @@ const CalculadoraFranja = () => {
               hint="Coeficiente de reducción"
             />
             <InputField
-              label="Relación Lv/Lp (Rvp)"
-              value={vano.Rvp}
-              onChange={(v) => setVano({ ...vano, Rvp: parseFloat(v) || 1 })}
-              hint="Relación luz de viento / luz de peso"
-            />
-            <InputField
               label="N° Cadenas en Paralelo (Nca)"
               value={vano.Nca}
               onChange={(v) => setVano({ ...vano, Nca: parseInt(v) || 1 })}
@@ -808,7 +801,7 @@ const CalculadoraFranja = () => {
                   <tr><td className="font-mono">L<sub>c</sub></td><td>Longitud cadena aisladores</td><td className="font-mono">{vano.largoCadena}</td><td>m</td></tr>
                   <tr><td className="font-mono">Q<sub>va</sub></td><td>Presión viento aisladores</td><td className="font-mono">{vano.Qva}</td><td>kg/m²</td></tr>
                   <tr className="border-t-2 border-primary/30"><td className="font-mono font-semibold">T<sub>r</sub></td><td>Resultante tensiones mecánicas</td><td className="font-mono font-semibold text-primary">{fmt(calc.Tr, 2)}</td><td>kg</td></tr>
-                  <tr><td className="font-mono">R<sub>vp</sub></td><td>Relación Lv/Lp</td><td className="font-mono">{vano.Rvp}</td><td>—</td></tr>
+                  <tr><td className="font-mono">L<sub>p</sub></td><td>Vano peso</td><td className="font-mono">{vano.vanoPeso}</td><td>m</td></tr>
                   <tr><td className="font-mono">p</td><td>Peso unitario subconductor</td><td className="font-mono">{conductor.peso}</td><td>kg/m</td></tr>
                   <tr><td className="font-mono">N<sub>a</sub></td><td>N° aisladores por cadena</td><td className="font-mono">{vano.Na}</td><td>—</td></tr>
                   <tr><td className="font-mono">P<sub>a</sub></td><td>Peso unitario aislador</td><td className="font-mono">{vano.pesoUnitarioAislador}</td><td>kg</td></tr>
