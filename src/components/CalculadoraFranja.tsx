@@ -801,7 +801,7 @@ const CalculadoraFranja = () => {
                   <tr><td className="font-mono">L<sub>c</sub></td><td>Longitud cadena aisladores</td><td className="font-mono">{vano.largoCadena}</td><td>m</td></tr>
                   <tr><td className="font-mono">Q<sub>va</sub></td><td>Presión viento aisladores</td><td className="font-mono">{vano.Qva}</td><td>kg/m²</td></tr>
                   <tr className="border-t-2 border-primary/30"><td className="font-mono font-semibold">T<sub>r</sub></td><td>Resultante tensiones mecánicas</td><td className="font-mono font-semibold text-primary">{fmt(calc.Tr, 2)}</td><td>kg</td></tr>
-                  <tr><td className="font-mono">R<sub>vp</sub></td><td>Relación Lv/Lp</td><td className="font-mono">{vano.Rvp}</td><td>—</td></tr>
+                  <tr><td className="font-mono">L<sub>p</sub></td><td>Vano peso</td><td className="font-mono">{vano.vanoPeso}</td><td>m</td></tr>
                   <tr><td className="font-mono">p</td><td>Peso unitario subconductor</td><td className="font-mono">{conductor.peso}</td><td>kg/m</td></tr>
                   <tr><td className="font-mono">N<sub>a</sub></td><td>N° aisladores por cadena</td><td className="font-mono">{vano.Na}</td><td>—</td></tr>
                   <tr><td className="font-mono">P<sub>a</sub></td><td>Peso unitario aislador</td><td className="font-mono">{vano.pesoUnitarioAislador}</td><td>kg</td></tr>
