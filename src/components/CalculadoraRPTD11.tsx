@@ -461,6 +461,7 @@ const CalculadoraRPTD11 = () => {
           <InputField label="Vano Viento (Lv)" value={vano.vanoViento} onChange={(v) => setVano({ ...vano, vanoViento: parseFloat(v) || 0 })} unit="m" />
           <InputField label="Vano Peso (Lp)" value={vano.vanoPeso} onChange={(v) => setVano({ ...vano, vanoPeso: parseFloat(v) || 0 })} unit="m" />
           <InputField label="Ángulo de la Línea (δ)" value={vano.anguloLinea} onChange={(v) => setVano({ ...vano, anguloLinea: parseFloat(v) || 0 })} unit="°" hint="Para solicitación de ángulo" />
+          <InputField label="Flecha Máxima (F)" value={vano.flechaMax} onChange={(v) => setVano({ ...vano, flechaMax: parseFloat(v) || 0 })} unit="m" hint="Sin sobrecarga, para sep. fase-fase" />
         </div>
       </CollapsibleSection>
 
