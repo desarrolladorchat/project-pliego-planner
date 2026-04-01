@@ -265,7 +265,7 @@ const CalculadoraFranja = () => {
     };
   }, [project, conductor, ambiente, vano, presionViento]);
 
-  const numConductoresFase = project.numConductoresFase;
+  const numConductoresFase = project.numConductoresFase; // used in JSX
 
   return (
     <div className="space-y-5">
