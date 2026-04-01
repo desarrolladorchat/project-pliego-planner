@@ -558,7 +558,7 @@ const CalculadoraRPTD11 = () => {
       </CollapsibleSection>
 
       {/* ── 9. Tensiones Mecánicas y Coef. Seguridad (§5.10) ── */}
-      <CollapsibleSection title="9. Tensiones Mecánicas y Coef. de Seguridad" icon={Zap} badge="§5.10">
+      <CollapsibleSection title="9. Tensiones Mecánicas y Coef. de Seguridad" icon={Zap} badge="§5.10" defaultOpen={false}>
         <div className="space-y-4">
           <div className="overflow-x-auto">
             <table className="eng-table">
