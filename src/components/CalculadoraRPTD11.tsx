@@ -49,7 +49,11 @@ const InputField = ({
           type="text"
           value={displayValue}
           onChange={(e) => {
-            const raw = e.target.value;
+            // Normalize: comma→dot, allow only digits and one dot, no thousands separator
+            const raw = e.target.value
+              .replace(/,/g, ".")
+              .replace(/[^\d.\-]/g, "")
+              .replace(/^(-?\d*\.\d*).*$/, "$1");
             setLocalVal(raw);
             onChange?.(raw);
           }}
