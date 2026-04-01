@@ -17,6 +17,12 @@ const tabs = [
     subtitle: "Líneas AT y EAT",
     icon: Zap,
   },
+  {
+    id: "calculadora",
+    label: "Calculadora",
+    subtitle: "Franja de Seguridad",
+    icon: Calculator,
+  },
 ];
 
 const Index = () => {
