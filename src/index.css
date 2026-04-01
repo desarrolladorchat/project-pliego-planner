@@ -117,7 +117,7 @@
   }
 
   .eng-table thead th {
-    @apply px-4 py-3 text-left font-semibold text-xs uppercase tracking-wider;
+    @apply px-2 py-2 sm:px-4 sm:py-3 text-left font-semibold text-[10px] sm:text-xs uppercase tracking-wider;
     background-color: hsl(var(--table-header));
     color: hsl(var(--table-header-foreground));
   }
