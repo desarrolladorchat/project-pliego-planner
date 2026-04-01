@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Zap, Ruler, FileText, ChevronRight } from "lucide-react";
+import { Zap, Ruler, FileText, ChevronRight, Calculator } from "lucide-react";
 import PliegoRPTD07 from "@/components/PliegoRPTD07";
 import PliegoRPTD11 from "@/components/PliegoRPTD11";
+import CalculadoraFranja from "@/components/CalculadoraFranja";
 
 const tabs = [
   {
@@ -15,6 +16,12 @@ const tabs = [
     label: "RPTD N° 11",
     subtitle: "Líneas AT y EAT",
     icon: Zap,
+  },
+  {
+    id: "calculadora",
+    label: "Calculadora",
+    subtitle: "Franja de Seguridad",
+    icon: Calculator,
   },
 ];
 
@@ -80,6 +87,7 @@ const Index = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {activeTab === "rptd07" && <PliegoRPTD07 />}
         {activeTab === "rptd11" && <PliegoRPTD11 />}
+        {activeTab === "calculadora" && <CalculadoraFranja />}
       </main>
 
       {/* Footer */}
