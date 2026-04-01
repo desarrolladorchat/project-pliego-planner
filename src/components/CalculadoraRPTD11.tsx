@@ -133,10 +133,10 @@ const defaultCortadura = {
 function getPresionViento(zona: "II" | "III" | "custom") { if (zona === "custom") return 0; return zona === "II" ? 50 : 40; }
 function getTempAmbiente(zona: "II" | "III" | "custom") { if (zona === "custom") return 0; return zona === "II" ? 5 : 10; }
 
-function getGc(zona: "II" | "III", hc: number): number {
+function getGc(zona: "II" | "III" | "custom", hc: number): number {
   if (hc <= 50) return 1.0;
   if (zona === "II") return 0.2914 * Math.log(hc) + 1.0468;
-  return 0.4936 * Math.log(hc) + 0.9124;
+  return 0.4936 * Math.log(hc) + 0.9124; // Zona III and custom use same Gc
 }
 
 function getCfReticulada(e: number): number {
