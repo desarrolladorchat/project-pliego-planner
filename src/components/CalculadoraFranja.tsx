@@ -263,9 +263,9 @@ const CalculadoraFranja = () => {
         0.5 * vano.Nca * (vano.diametroAislador / 1000) * vano.largoCadena * vano.Qva
       ) + Tr; // ×10⁻³ already handled by using meters for d
 
-    const denominadorCadena =
-      (vano.vanoViento / vano.Rvp) * ncp * conductor.peso +
-      0.5 * vano.Nca * vano.Na * vano.pesoUnitarioAislador;
+     const denominadorCadena =
+       vano.vanoPeso * ncp * conductor.peso +
+       0.5 * vano.Nca * vano.Na * vano.pesoUnitarioAislador;
 
     const tanAlphaCadena = numeradorCadena / denominadorCadena;
     const alphaCadenaRad = Math.atan(tanAlphaCadena);
