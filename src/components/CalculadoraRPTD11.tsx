@@ -97,10 +97,10 @@ const defaultCableGuardia = {
 };
 
 const defaultAmbiente = {
-  zona: "III" as "II" | "III",
+  zona: "III" as "II" | "III" | "custom",
   altitud: 131,
-  presionViento: 40,       // auto
-  tempAmbiente: 10,        // auto
+  presionViento: 40,       // auto or custom
+  tempAmbiente: 10,        // auto or custom
   espHielo: 0,             // mm — espesor manguito de hielo (Zona I/IV)
 };
 
@@ -130,13 +130,13 @@ const defaultCortadura = {
 
 // ── Helpers ─────────────────────────────────────────────────────────────
 
-function getPresionViento(zona: "II" | "III") { return zona === "II" ? 50 : 40; }
-function getTempAmbiente(zona: "II" | "III") { return zona === "II" ? 5 : 10; }
+function getPresionViento(zona: "II" | "III" | "custom") { if (zona === "custom") return 0; return zona === "II" ? 50 : 40; }
+function getTempAmbiente(zona: "II" | "III" | "custom") { if (zona === "custom") return 0; return zona === "II" ? 5 : 10; }
 
-function getGc(zona: "II" | "III", hc: number): number {
+function getGc(zona: "II" | "III" | "custom", hc: number): number {
   if (hc <= 50) return 1.0;
   if (zona === "II") return 0.2914 * Math.log(hc) + 1.0468;
-  return 0.4936 * Math.log(hc) + 0.9124;
+  return 0.4936 * Math.log(hc) + 0.9124; // Zona III and custom use same Gc
 }
 
 function getCfReticulada(e: number): number {
@@ -178,8 +178,8 @@ const CalculadoraRPTD11 = () => {
   const [cruceTensionDist, setCruceTensionDist] = useState(30); // m al punto de cruce
   const [kVInferior, setKVInferior] = useState(66); // kV línea inferior
 
-  const presionViento = useMemo(() => getPresionViento(ambiente.zona), [ambiente.zona]);
-  const tempAmbiente = useMemo(() => getTempAmbiente(ambiente.zona), [ambiente.zona]);
+  const presionViento = useMemo(() => ambiente.zona === "custom" ? ambiente.presionViento : getPresionViento(ambiente.zona), [ambiente.zona, ambiente.presionViento]);
+  const tempAmbiente = useMemo(() => ambiente.zona === "custom" ? ambiente.tempAmbiente : getTempAmbiente(ambiente.zona), [ambiente.zona, ambiente.tempAmbiente]);
 
   const calc = useMemo(() => {
     // ── 1. Gc – Factor de amplificación
@@ -357,14 +357,48 @@ const CalculadoraRPTD11 = () => {
             options={[
               { value: "II", label: "Zona II — Costera (50 kg/m²)" },
               { value: "III", label: "Zona III — Interior (40 kg/m²)" },
+              { value: "custom", label: "Personalizada — Definida por usuario" },
             ]}
-            onChange={(v) => setAmbiente({ ...ambiente, zona: v as "II" | "III" })}
+            onChange={(v) => {
+              const newZona = v as "II" | "III" | "custom";
+              if (newZona === "custom") {
+                setAmbiente({ ...ambiente, zona: newZona });
+              } else {
+                setAmbiente({
+                  ...ambiente,
+                  zona: newZona,
+                  presionViento: getPresionViento(newZona),
+                  tempAmbiente: getTempAmbiente(newZona),
+                });
+              }
+            }}
           />
-          <InputField label="Presión de Viento (auto)" value={presionViento} readOnly unit="kg/m²" hint="Según zona" />
-          <InputField label="Temperatura Ambiente (auto)" value={tempAmbiente} readOnly unit="°C" />
+          <InputField
+            label={ambiente.zona === "custom" ? "Presión de Viento" : "Presión de Viento (auto)"}
+            value={ambiente.zona === "custom" ? ambiente.presionViento : presionViento}
+            onChange={ambiente.zona === "custom" ? (v) => setAmbiente({ ...ambiente, presionViento: parseFloat(v) || 0 }) : undefined}
+            readOnly={ambiente.zona !== "custom"}
+            unit="kg/m²"
+            hint={ambiente.zona === "custom" ? "Definido por usuario" : "Según zona"}
+          />
+          <InputField
+            label={ambiente.zona === "custom" ? "Temperatura Ambiente" : "Temperatura Ambiente (auto)"}
+            value={ambiente.zona === "custom" ? ambiente.tempAmbiente : tempAmbiente}
+            onChange={ambiente.zona === "custom" ? (v) => setAmbiente({ ...ambiente, tempAmbiente: parseFloat(v) || 0 }) : undefined}
+            readOnly={ambiente.zona !== "custom"}
+            unit="°C"
+            hint={ambiente.zona === "custom" ? "Definido por usuario" : "Según zona"}
+          />
           <InputField label="Altitud" value={ambiente.altitud} onChange={(v) => setAmbiente({ ...ambiente, altitud: parseFloat(v) || 0 })} unit="m.s.n.m." />
           <InputField label="Espesor Manguito de Hielo" value={ambiente.espHielo} onChange={(v) => setAmbiente({ ...ambiente, espHielo: parseFloat(v) || 0 })} unit="mm" hint="0 para Zonas II y III" />
         </div>
+        {ambiente.zona === "custom" && (
+          <div className="eng-note mt-4">
+            <p className="text-xs"><Info className="w-3 h-3 inline mr-1" />
+              <strong>Modo personalizado:</strong> Los valores de presión de viento y temperatura son definidos manualmente. El factor G<sub>c</sub> utiliza la fórmula de Zona III por defecto.
+            </p>
+          </div>
+        )}
       </CollapsibleSection>
 
       {/* ── 5. Estructura de Soporte ── */}
