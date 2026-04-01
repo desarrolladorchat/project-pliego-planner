@@ -289,9 +289,9 @@ const CalculadoraFranja = () => {
       </div>
 
       {/* Result Summary - Always visible */}
-      <div className="bg-card rounded-xl p-6 shadow-sm border-2 border-primary/30">
-        <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-4">Resultado del Cálculo</h3>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border-2 border-primary/30">
+        <h3 className="text-xs sm:text-sm font-bold text-muted-foreground uppercase tracking-wider mb-3 sm:mb-4">Resultado del Cálculo</h3>
+        <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-6 gap-2 sm:gap-3">
           {[
             { label: "dE", value: calc.dE, unit: "m", color: "text-foreground" },
             { label: "df", value: calc.df, unit: "m", color: "text-foreground" },
