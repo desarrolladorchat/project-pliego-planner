@@ -1,6 +1,9 @@
 import { useState, useMemo } from "react";
 import { Calculator, Wind, Ruler, Zap, Settings, ChevronDown, ChevronUp, Info } from "lucide-react";
 
+// Safe number formatting helper
+const fmt = (v: number | undefined | null, d = 2) => Number(v ?? 0).toFixed(d);
+
 // Default values from Monteaguila 220 kV project
 const defaultProject = {
   projectName: "Nueva S/E Seccionadora Monteaguila 220 kV",
