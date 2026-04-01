@@ -270,13 +270,13 @@ const CalculadoraFranja = () => {
   return (
     <div className="space-y-5">
       {/* Header */}
-      <div className="bg-card rounded-xl p-6 shadow-sm border border-border">
-        <div className="flex items-start gap-4">
-          <div className="p-3 rounded-lg bg-primary/10">
-            <Calculator className="w-6 h-6 text-primary" />
+      <div className="bg-card rounded-xl p-4 sm:p-6 shadow-sm border border-border">
+        <div className="flex items-start gap-3 sm:gap-4">
+          <div className="p-2 sm:p-3 rounded-lg bg-primary/10 flex-shrink-0">
+            <Calculator className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
           </div>
-          <div className="flex-1">
-            <h2 className="text-xl font-bold text-foreground">Calculadora de Franja de Seguridad</h2>
+          <div className="flex-1 min-w-0">
+            <h2 className="text-base sm:text-xl font-bold text-foreground">Calculadora de Franja de Seguridad</h2>
             <p className="text-muted-foreground text-sm mt-1">
               Según RPTD N° 07 — Franja y Distancias de Seguridad (SEC)
             </p>
