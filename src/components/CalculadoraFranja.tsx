@@ -300,10 +300,10 @@ const CalculadoraFranja = () => {
             { label: "DeL", value: calc.DeL, unit: "m", color: "text-primary" },
             { label: "FS", value: calc.FS, unit: "m", color: "text-primary" },
           ].map((r) => (
-            <div key={r.label} className={`rounded-lg p-3 text-center ${r.label === "FS" ? "bg-primary/10 border border-primary/30" : "bg-muted/50"}`}>
-              <p className={`text-xl font-bold font-mono ${r.color}`}>{r.value.toFixed(2)}</p>
-              <p className="text-xs text-muted-foreground mt-1">
-                {r.label === "FS" ? "Franja Seguridad" : r.label} [{r.unit}]
+            <div key={r.label} className={`rounded-lg p-2 sm:p-3 text-center ${r.label === "FS" ? "bg-primary/10 border border-primary/30" : "bg-muted/50"}`}>
+              <p className={`text-base sm:text-xl font-bold font-mono ${r.color}`}>{r.value.toFixed(2)}</p>
+              <p className="text-[10px] sm:text-xs text-muted-foreground mt-0.5 sm:mt-1">
+                {r.label === "FS" ? "FS" : r.label} <span className="hidden sm:inline">[{r.unit}]</span>
               </p>
             </div>
           ))}
