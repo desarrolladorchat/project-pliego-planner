@@ -762,9 +762,9 @@ const CalculadoraRPTD11 = () => {
         </div>
       </CollapsibleSection>
 
-      {/* ── 13. Hielo (§5.21) ── */}
+      {/* ── 14. Hielo (§5.21) ── */}
       {ambiente.espHielo > 0 && (
-        <CollapsibleSection title="13. Sobrecarga de Hielo" icon={Wind} badge="§5.21">
+        <CollapsibleSection title="14. Sobrecarga de Hielo" icon={Wind} badge="§5.21" defaultOpen={false}>
           <div className="space-y-4">
             <div className="eng-formula">
               <p className="text-sm">
@@ -778,8 +778,8 @@ const CalculadoraRPTD11 = () => {
         </CollapsibleSection>
       )}
 
-      {/* ── 14. Factores de Mínima Sobrecarga (§5.28.8 Tabla N°4) ── */}
-      <CollapsibleSection title="14. Factores de Mínima Sobrecarga" icon={Building} badge="§5.28.8 Tabla N°4" defaultOpen={false}>
+      {/* ── 15. Factores de Mínima Sobrecarga (§5.28.8 Tabla N°4) ── */}
+      <CollapsibleSection title="15. Factores de Mínima Sobrecarga" icon={Building} badge="§5.28.8 Tabla N°4" defaultOpen={false}>
         <div className="overflow-x-auto">
           <table className="eng-table">
             <thead><tr><th>Condición</th><th>Factor</th></tr></thead>
