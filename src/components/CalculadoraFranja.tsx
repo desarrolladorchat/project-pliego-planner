@@ -223,19 +223,24 @@ const CalculadoraFranja = () => {
     // df = flecha × sin(αC)
     const df = vano.flecha * Math.sin(alphaCRad);
 
-    // Ángulo de desviación de la cadena de aisladores
-    // Numerador: Pv × fp × [ncp × ΦCP × Lv + na × Aa]
-    // Denominador: ncp × MCP × Lp + na × Ma
-    const fp = 1.2; // factor amplificación presión sobre cadena
-    const ncp = project.numConductoresFase;
+    // Ángulo de desviación de la cadena de aisladores (fórmula completa RPTD N°07)
+    // tan(α) = [k × (Lv × Nsc × d × Qvc + 0.5 × Nca × da × Lc × Qva) × 10⁻³ + Tr] / [(Lv/Rvp) × Nsc × p + 0.5 × Nca × Na × Pa]
+    // Tr = 2 × Nsc × Tc × sin(δ/2)
+    const fp = 1.2; // factor amplificación (legacy display)
+    const ncp = project.numConductoresFase; // Nsc
+    const deltaRad = (vano.anguloLinea * Math.PI) / 180;
+    const Tr = 2 * ncp * vano.Tc * Math.sin(deltaRad / 2);
+
     const numeradorCadena =
-      presionViento * fp * (
-        ncp * (conductor.diametro / 1000) * vano.vanoViento +
-        vano.numAislacionFase * vano.areaAislacion
-      );
+      vano.k * (
+        vano.vanoViento * ncp * (conductor.diametro / 1000) * presionViento +
+        0.5 * vano.Nca * (vano.diametroAislador / 1000) * vano.largoCadena * vano.Qva
+      ) + Tr; // ×10⁻³ already handled by using meters for d
+
     const denominadorCadena =
-      ncp * conductor.peso * vano.vanoPeso +
-      vano.numAislacionFase * vano.pesoAislacion;
+      (vano.vanoViento / vano.Rvp) * ncp * conductor.peso +
+      0.5 * vano.Nca * vano.Na * vano.pesoUnitarioAislador;
+
     const tanAlphaCadena = numeradorCadena / denominadorCadena;
     const alphaCadenaRad = Math.atan(tanAlphaCadena);
     const alphaCadenaDeg = (alphaCadenaRad * 180) / Math.PI;
