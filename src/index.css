@@ -123,7 +123,7 @@
   }
 
   .eng-table tbody td {
-    @apply px-4 py-3 border-b;
+    @apply px-2 py-2 sm:px-4 sm:py-3 border-b text-xs sm:text-sm;
     border-color: hsl(var(--border));
   }
 
