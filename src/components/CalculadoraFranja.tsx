@@ -764,7 +764,7 @@ const CalculadoraFranja = () => {
             <div className="eng-formula">
               <p className="text-sm mb-1"><strong>Fórmula completa — Ángulo de desviación de la cadena (RPTD N°07):</strong></p>
               <p className="text-center text-sm mb-2">
-                tan(α) = [k × (L<sub>v</sub> × N<sub>sc</sub> × d × Q<sub>vc</sub> + 0.5 × N<sub>ca</sub> × d<sub>a</sub> × L<sub>c</sub> × Q<sub>va</sub>) + T<sub>r</sub>] / [(L<sub>v</sub>/R<sub>vp</sub>) × N<sub>sc</sub> × p + 0.5 × N<sub>ca</sub> × N<sub>a</sub> × P<sub>a</sub>]
+                tan(α) = [k × (L<sub>v</sub> × N<sub>sc</sub> × d × Q<sub>vc</sub> + 0.5 × N<sub>ca</sub> × d<sub>a</sub> × L<sub>c</sub> × Q<sub>va</sub>) + T<sub>r</sub>] / [L<sub>p</sub> × N<sub>sc</sub> × p + 0.5 × N<sub>ca</sub> × N<sub>a</sub> × P<sub>a</sub>]
               </p>
               <p className="text-center text-xs text-muted-foreground mb-1">
                 Donde: T<sub>r</sub> = 2 × N<sub>sc</sub> × T<sub>c</sub> × sin(δ/2)
