@@ -106,14 +106,14 @@ const CollapsibleSection = ({
     <div className="bg-card rounded-xl shadow-sm border border-border overflow-hidden">
       <button
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between px-6 py-4 hover:bg-muted/30 transition-colors"
+        className="w-full flex items-center justify-between px-3 sm:px-6 py-3 sm:py-4 hover:bg-muted/30 transition-colors"
       >
-        <div className="flex items-center gap-3">
-          <div className="p-2 rounded-lg bg-primary/10">
-            <Icon className="w-5 h-5 text-primary" />
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <div className="p-1.5 sm:p-2 rounded-lg bg-primary/10 flex-shrink-0">
+            <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
           </div>
-          <h3 className="text-base font-bold text-foreground">{title}</h3>
-          {badge && <span className="eng-badge eng-badge-primary">{badge}</span>}
+          <h3 className="text-sm sm:text-base font-bold text-foreground truncate">{title}</h3>
+          {badge && <span className="eng-badge eng-badge-primary hidden sm:inline-flex">{badge}</span>}
         </div>
         {open ? <ChevronUp className="w-4 h-4 text-muted-foreground" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
       </button>
