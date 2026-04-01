@@ -361,7 +361,7 @@ const CalculadoraFranja = () => {
 
       {/* 2. Conductor */}
       <CollapsibleSection title="2. Características del Conductor" icon={Zap} badge="RPTD N°07 §4.3">
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
           <InputField
             label="Tipo de Conductor"
             value={conductor.tipo}
