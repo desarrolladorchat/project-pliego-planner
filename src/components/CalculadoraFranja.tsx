@@ -168,7 +168,10 @@ const InputField = ({
           type="text"
           value={displayValue}
           onChange={(e) => {
-            const raw = e.target.value;
+            const raw = e.target.value
+              .replace(/,/g, ".")
+              .replace(/[^\d.\-]/g, "")
+              .replace(/^(-?\d*\.\d*).*$/, "$1");
             setLocalVal(raw);
             onChange?.(raw);
           }}
