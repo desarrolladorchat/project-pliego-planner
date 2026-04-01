@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Zap, Ruler, FileText, ChevronRight, Calculator } from "lucide-react";
+import { Zap, Ruler, FileText, ChevronRight, Calculator, Building } from "lucide-react";
 import PliegoRPTD07 from "@/components/PliegoRPTD07";
 import PliegoRPTD11 from "@/components/PliegoRPTD11";
 import CalculadoraFranja from "@/components/CalculadoraFranja";
+import CalculadoraRPTD11 from "@/components/CalculadoraRPTD11";
 
 const tabs = [
   {
@@ -19,9 +20,15 @@ const tabs = [
   },
   {
     id: "calculadora",
-    label: "Calculadora",
-    subtitle: "Franja de Seguridad",
+    label: "Calc. Franja",
+    subtitle: "RPTD N°07",
     icon: Calculator,
+  },
+  {
+    id: "calculadora11",
+    label: "Calc. RPTD 11",
+    subtitle: "Líneas AT/EAT",
+    icon: Building,
   },
 ];
 
