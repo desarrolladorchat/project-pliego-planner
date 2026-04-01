@@ -787,10 +787,6 @@ const CalculadoraFranja = () => {
                 </tbody>
               </table>
             </div>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
 
             <div className="eng-formula">
               <p className="text-center text-sm">
