@@ -27,29 +27,46 @@ const CollapsibleSection = ({
   );
 };
 
+const formatDisplay = (v: number | string) =>
+  typeof v === "number" ? (Number.isInteger(v) ? String(v) : v.toFixed(4).replace(/\.?0+$/, "")) : v;
+
 const InputField = ({
   label, value, onChange, unit, hint, readOnly = false, highlight = false,
 }: {
   label: string; value: number | string; onChange?: (v: string) => void; unit?: string; hint?: string; readOnly?: boolean; highlight?: boolean;
-}) => (
-  <div className="space-y-1">
-    <label className="text-xs font-medium text-muted-foreground">{label}</label>
-    <div className="flex items-center gap-1">
-      <input
-        type="text"
-        value={typeof value === "number" ? (Number.isInteger(value) ? value : value.toFixed(4).replace(/\.?0+$/, "")) : value}
-        onChange={(e) => onChange?.(e.target.value)}
-        readOnly={readOnly}
-        className={`flex h-9 w-full rounded-md border px-3 py-1 text-sm font-mono transition-colors
-          ${readOnly ? "bg-muted/50 border-border cursor-default text-foreground/70" : "bg-background border-input focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-1"}
-          ${highlight ? "!bg-primary/10 !border-primary/40 !text-primary font-bold" : ""}
-        `}
-      />
-      {unit && <span className="text-xs text-muted-foreground whitespace-nowrap min-w-[40px]">{unit}</span>}
+}) => {
+  const [localVal, setLocalVal] = useState<string>(formatDisplay(value));
+  const [focused, setFocused] = useState(false);
+
+  // Sync external value when not focused
+  const displayValue = focused ? localVal : formatDisplay(value);
+
+  return (
+    <div className="space-y-1">
+      <label className="text-xs font-medium text-muted-foreground">{label}</label>
+      <div className="flex items-center gap-1">
+        <input
+          type="text"
+          value={displayValue}
+          onChange={(e) => {
+            const raw = e.target.value;
+            setLocalVal(raw);
+            onChange?.(raw);
+          }}
+          onFocus={() => { setFocused(true); setLocalVal(formatDisplay(value)); }}
+          onBlur={() => setFocused(false)}
+          readOnly={readOnly}
+          className={`flex h-9 w-full rounded-md border px-3 py-1 text-sm font-mono transition-colors
+            ${readOnly ? "bg-muted/50 border-border cursor-default text-foreground/70" : "bg-background border-input focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-1"}
+            ${highlight ? "!bg-primary/10 !border-primary/40 !text-primary font-bold" : ""}
+          `}
+        />
+        {unit && <span className="text-xs text-muted-foreground whitespace-nowrap min-w-[40px]">{unit}</span>}
+      </div>
+      {hint && <p className="text-[10px] text-muted-foreground/70">{hint}</p>}
     </div>
-    {hint && <p className="text-[10px] text-muted-foreground/70">{hint}</p>}
-  </div>
-);
+  );
+};
 
 const SelectField = ({
   label, value, options, onChange,
