@@ -828,6 +828,7 @@ const CalculadoraRPTD11 = () => {
                 { param: "Viento sobre Conductor", value: calc.fuerzaVientoConductor, unit: "kg", decimals: 2 },
                 { param: "Cortadura Conductor", value: calc.cortaduraCond, unit: "kg", decimals: 2 },
                 { param: "Fuerza Angular Conductor", value: calc.fuerzaAnguloCond, unit: "kg", decimals: 2 },
+                { param: "Separación Fase-Fase (S)", value: calc.separacionFaseFase, unit: "m", decimals: 3, highlight: true },
                 { param: "Separación Paralelismo", value: calc.separacionParalelismo, unit: "m", decimals: 2 },
               ].map((row, i) => (
                 <tr key={i} className={row.highlight ? "!bg-primary/5" : ""}>
