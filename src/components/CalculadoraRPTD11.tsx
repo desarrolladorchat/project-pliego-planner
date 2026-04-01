@@ -601,7 +601,7 @@ const CalculadoraRPTD11 = () => {
       </CollapsibleSection>
 
       {/* ── 10. Cortadura de Conductor (§5.14 Tabla N°3) ── */}
-      <CollapsibleSection title="10. Cortadura de Conductor" icon={Zap} badge="§5.14 Tabla N°3">
+      <CollapsibleSection title="10. Cortadura de Conductor" icon={Zap} badge="§5.14 Tabla N°3" defaultOpen={false}>
         <div className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
             <SelectField label="Tipo de Estructura" value={cortadura.tipoEstructura}
