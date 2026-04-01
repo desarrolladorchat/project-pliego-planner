@@ -135,6 +135,9 @@ const CollapsibleSection = ({
   );
 };
 
+const formatDisplay = (v: number | string) =>
+  typeof v === "number" ? (Number.isInteger(v) ? String(v) : v.toFixed(4).replace(/\.?0+$/, "")) : v;
+
 // Input field component
 const InputField = ({
   label,
@@ -152,22 +155,33 @@ const InputField = ({
   hint?: string;
   readOnly?: boolean;
   highlight?: boolean;
-}) => (
-  <div className="space-y-1">
-    <label className="text-xs font-medium text-muted-foreground">{label}</label>
-    <div className="flex items-center gap-1">
-      <input
-        type="text"
-        value={typeof value === "number" ? (Number.isInteger(value) ? value : value.toFixed(4).replace(/\.?0+$/, "")) : value}
-        onChange={(e) => onChange?.(e.target.value)}
-        readOnly={readOnly}
-        className={`flex h-9 w-full rounded-md border px-3 py-1 text-sm font-mono transition-colors
-          ${readOnly
-            ? "bg-muted/50 border-border cursor-default text-foreground/70"
-            : "bg-background border-input focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-1"
-          }
-          ${highlight ? "!bg-primary/10 !border-primary/40 !text-primary font-bold" : ""}
-        `}
+}) => {
+  const [localVal, setLocalVal] = useState<string>(formatDisplay(value));
+  const [focused, setFocused] = useState(false);
+  const displayValue = focused ? localVal : formatDisplay(value);
+
+  return (
+    <div className="space-y-1">
+      <label className="text-xs font-medium text-muted-foreground">{label}</label>
+      <div className="flex items-center gap-1">
+        <input
+          type="text"
+          value={displayValue}
+          onChange={(e) => {
+            const raw = e.target.value;
+            setLocalVal(raw);
+            onChange?.(raw);
+          }}
+          onFocus={() => { setFocused(true); setLocalVal(formatDisplay(value)); }}
+          onBlur={() => setFocused(false)}
+          readOnly={readOnly}
+          className={`flex h-9 w-full rounded-md border px-3 py-1 text-sm font-mono transition-colors
+            ${readOnly
+              ? "bg-muted/50 border-border cursor-default text-foreground/70"
+              : "bg-background border-input focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-1"
+            }
+            ${highlight ? "!bg-primary/10 !border-primary/40 !text-primary font-bold" : ""}
+          `}
       />
       {unit && <span className="text-xs text-muted-foreground whitespace-nowrap min-w-[40px]">{unit}</span>}
     </div>
