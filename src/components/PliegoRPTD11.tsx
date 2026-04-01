@@ -4,13 +4,13 @@ const PliegoRPTD11 = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-card rounded-xl p-6 shadow-sm border border-border">
-        <div className="flex items-start gap-4">
-          <div className="p-3 rounded-lg bg-primary/10">
+      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border">
+        <div className="flex items-start gap-2 sm:gap-4">
+          <div className="p-2 sm:p-3 rounded-lg bg-primary/10 flex-shrink-0">
             <Zap className="w-6 h-6 text-primary" />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-foreground">RPTD N° 11 — Líneas de Alta y Extra Alta Tensión</h2>
+            <h2 className="text-base sm:text-xl font-bold text-foreground">RPTD N° 11 — Líneas de Alta y Extra Alta Tensión</h2>
             <p className="text-muted-foreground text-sm mt-1">
               Resolución Exenta N° 33.277 (10/09/2020), modificada por R.E. N° 11.682 (07/04/2022) — SEC
             </p>
@@ -24,7 +24,7 @@ const PliegoRPTD11 = () => {
       </div>
 
       {/* 1. Objetivo y Alcance */}
-      <div className="bg-card rounded-xl p-6 shadow-sm border border-border eng-section">
+      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
         <h3 className="eng-section-title">
           <BookOpen className="w-5 h-5 text-primary" />
           1 – 2. Objetivo y Alcance
@@ -35,7 +35,7 @@ const PliegoRPTD11 = () => {
       </div>
 
       {/* 3. Referencias normativas */}
-      <div className="bg-card rounded-xl p-6 shadow-sm border border-border eng-section">
+      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
         <h3 className="eng-section-title">
           <BookOpen className="w-5 h-5 text-primary" />
           3. Referencias Normativas
@@ -71,12 +71,12 @@ const PliegoRPTD11 = () => {
       </div>
 
       {/* 4. Terminología */}
-      <div className="bg-card rounded-xl p-6 shadow-sm border border-border eng-section">
+      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
         <h3 className="eng-section-title">
           <BookOpen className="w-5 h-5 text-primary" />
           4. Terminología y Definiciones (selección)
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {[
             ["Aislador", "Elemento de material aislante para soportar y separar eléctricamente un conductor."],
             ["Anclaje", "Estructura para establecer puntos fijos del conductor a lo largo de la línea."],
@@ -96,7 +96,7 @@ const PliegoRPTD11 = () => {
       </div>
 
       {/* 5. Líneas de transporte aéreas */}
-      <div className="bg-card rounded-xl p-6 shadow-sm border border-border eng-section">
+      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
         <h3 className="eng-section-title">
           <Shield className="w-5 h-5 text-primary" />
           5.1 – 5.7 Requisitos Básicos y Cruces
@@ -133,14 +133,14 @@ const PliegoRPTD11 = () => {
       </div>
 
       {/* 5.8 Condiciones geográficas y meteorológicas */}
-      <div className="bg-card rounded-xl p-6 shadow-sm border border-border eng-section">
+      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
         <h3 className="eng-section-title">
           <Mountain className="w-5 h-5 text-primary" />
           5.8 Condiciones Geográficas y Meteorológicas
         </h3>
 
         <h4 className="eng-subsection-title">5.8.1 Zonificación del País – Tabla N° 1</h4>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
           <div>
             <p className="text-sm font-semibold mb-2 text-foreground">Zona I – Altitudes superiores a:</p>
             <div className="overflow-x-auto">
@@ -196,7 +196,7 @@ const PliegoRPTD11 = () => {
       </div>
 
       {/* 5.9 Estructuras de soporte */}
-      <div className="bg-card rounded-xl p-6 shadow-sm border border-border eng-section">
+      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
         <h3 className="eng-section-title">
           <Building className="w-5 h-5 text-primary" />
           5.9 Estructuras de Soporte
@@ -209,7 +209,7 @@ const PliegoRPTD11 = () => {
       </div>
 
       {/* 5.10 Solicitaciones estructurales */}
-      <div className="bg-card rounded-xl p-6 shadow-sm border border-border eng-section">
+      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
         <h3 className="eng-section-title">
           <Hammer className="w-5 h-5 text-primary" />
           5.10 Solicitaciones Estructurales
@@ -233,7 +233,7 @@ const PliegoRPTD11 = () => {
       </div>
 
       {/* 5.11-5.12 Solicitación de viento */}
-      <div className="bg-card rounded-xl p-6 shadow-sm border border-border eng-section">
+      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
         <h3 className="eng-section-title">
           <Wind className="w-5 h-5 text-primary" />
           5.11 – 5.12 Solicitación de Viento
@@ -250,7 +250,7 @@ const PliegoRPTD11 = () => {
         <div className="eng-formula">
           <p className="text-center font-semibold text-base">F<sub>z</sub> = G<sub>t</sub> × C<sub>f</sub> × q<sub>c</sub> × A<sub>f</sub></p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
           <div className="bg-muted/50 rounded-lg p-3">
             <p className="font-mono text-sm font-semibold text-primary">G<sub>t</sub> – Factor de turbulencia</p>
             <ul className="text-xs text-foreground/70 mt-1 space-y-1">
@@ -274,7 +274,7 @@ const PliegoRPTD11 = () => {
       </div>
 
       {/* 5.13-5.14 Cortadura */}
-      <div className="bg-card rounded-xl p-6 shadow-sm border border-border eng-section">
+      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
         <h3 className="eng-section-title">
           <Wrench className="w-5 h-5 text-primary" />
           5.13 – 5.14 Solicitaciones de Ángulo y Cortadura
@@ -300,7 +300,7 @@ const PliegoRPTD11 = () => {
             </tbody>
           </table>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-foreground/80">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-foreground/80">
           <div>
             <p><strong>n</strong> = conductores por fase</p>
             <p><strong>n1</strong> = mínimo conductores cortados en suspensión</p>
@@ -315,7 +315,7 @@ const PliegoRPTD11 = () => {
       </div>
 
       {/* 5.28 Diseño de estructuras */}
-      <div className="bg-card rounded-xl p-6 shadow-sm border border-border eng-section">
+      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
         <h3 className="eng-section-title">
           <Building className="w-5 h-5 text-primary" />
           5.28 Diseño de Estructuras de Soporte
@@ -353,7 +353,7 @@ const PliegoRPTD11 = () => {
       </div>
 
       {/* 5.21-5.24 Hielo y Galloping */}
-      <div className="bg-card rounded-xl p-6 shadow-sm border border-border">
+      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border">
         <h3 className="eng-section-title">
           <Snowflake className="w-5 h-5 text-primary" />
           5.21 – 5.24 Hielo, Galloping y Sleet Jump

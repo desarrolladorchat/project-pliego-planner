@@ -117,13 +117,13 @@
   }
 
   .eng-table thead th {
-    @apply px-4 py-3 text-left font-semibold text-xs uppercase tracking-wider;
+    @apply px-2 py-2 sm:px-4 sm:py-3 text-left font-semibold text-[10px] sm:text-xs uppercase tracking-wider;
     background-color: hsl(var(--table-header));
     color: hsl(var(--table-header-foreground));
   }
 
   .eng-table tbody td {
-    @apply px-4 py-3 border-b;
+    @apply px-2 py-2 sm:px-4 sm:py-3 border-b text-xs sm:text-sm;
     border-color: hsl(var(--border));
   }
 
@@ -136,7 +136,7 @@
   }
 
   .eng-formula {
-    @apply px-6 py-4 rounded-lg my-4 font-mono text-sm border-l-4;
+    @apply px-3 py-3 sm:px-6 sm:py-4 rounded-lg my-4 font-mono text-xs sm:text-sm border-l-4 overflow-x-auto;
     background-color: hsl(var(--formula-bg));
     border-left-color: hsl(var(--formula-border));
   }

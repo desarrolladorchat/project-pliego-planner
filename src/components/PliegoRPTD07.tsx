@@ -4,13 +4,13 @@ const PliegoRPTD07 = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-card rounded-xl p-6 shadow-sm border border-border">
-        <div className="flex items-start gap-4">
-          <div className="p-3 rounded-lg bg-primary/10">
+      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border">
+        <div className="flex items-start gap-2 sm:gap-4">
+          <div className="p-2 sm:p-3 rounded-lg bg-primary/10 flex-shrink-0">
             <Ruler className="w-6 h-6 text-primary" />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-foreground">RPTD N° 07 — Franja y Distancias de Seguridad</h2>
+            <h2 className="text-base sm:text-xl font-bold text-foreground">RPTD N° 07 — Franja y Distancias de Seguridad</h2>
             <p className="text-muted-foreground text-sm mt-1">
               Resolución Exenta N° 33.277 (10/09/2020), modificada por R.E. N° 11.682 (07/04/2022) — SEC
             </p>
@@ -24,7 +24,7 @@ const PliegoRPTD07 = () => {
       </div>
 
       {/* 1. Objetivo y Alcance */}
-      <div className="bg-card rounded-xl p-6 shadow-sm border border-border eng-section">
+      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
         <h3 className="eng-section-title">
           <BookOpen className="w-5 h-5 text-primary" />
           1. Objetivo
@@ -42,7 +42,7 @@ const PliegoRPTD07 = () => {
       </div>
 
       {/* 3. Terminología */}
-      <div className="bg-card rounded-xl p-6 shadow-sm border border-border eng-section">
+      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
         <h3 className="eng-section-title">
           <BookOpen className="w-5 h-5 text-primary" />
           3. Terminología y Definiciones
@@ -63,7 +63,7 @@ const PliegoRPTD07 = () => {
       </div>
 
       {/* 4. Franja de Seguridad */}
-      <div className="bg-card rounded-xl p-6 shadow-sm border border-border eng-section">
+      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
         <h3 className="eng-section-title">
           <Ruler className="w-5 h-5 text-primary" />
           4. Franja de Seguridad
@@ -80,7 +80,7 @@ const PliegoRPTD07 = () => {
               D<sub>eL</sub> = d<sub>E</sub> + d<sub>f</sub> + d<sub>c</sub> + d<sub>s</sub> &nbsp;(metros)
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
             {[
               { var: "dE", desc: "Distancia entre el eje de la estructura más espaciosa y el punto de fijación del conductor más externo." },
               { var: "df", desc: "Proyección sobre el suelo de la desviación, debido al viento, de la flecha del conductor más alejado del eje." },
@@ -268,7 +268,7 @@ const PliegoRPTD07 = () => {
       </div>
 
       {/* 5. Distancias de seguridad > 23 kV */}
-      <div className="bg-card rounded-xl p-6 shadow-sm border border-border eng-section">
+      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
         <h3 className="eng-section-title">
           <Zap className="w-5 h-5 text-primary" />
           5. Distancias de Seguridad en Líneas Aéreas &gt; 23 kV
@@ -390,7 +390,7 @@ const PliegoRPTD07 = () => {
       </div>
 
       {/* 6. Distancias ≤ 23 kV */}
-      <div className="bg-card rounded-xl p-6 shadow-sm border border-border eng-section">
+      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border eng-section">
         <h3 className="eng-section-title">
           <Building2 className="w-5 h-5 text-primary" />
           6. Distancias de Seguridad en Líneas ≤ 23 kV
@@ -472,7 +472,7 @@ const PliegoRPTD07 = () => {
       </div>
 
       {/* 7. Alumbrado Público */}
-      <div className="bg-card rounded-xl p-6 shadow-sm border border-border">
+      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border border-border">
         <h3 className="eng-section-title">
           <Lightbulb className="w-5 h-5 text-primary" />
           7. Distancias Mínimas de Seguridad en Alumbrado Público

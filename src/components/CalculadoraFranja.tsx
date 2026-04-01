@@ -106,18 +106,18 @@ const CollapsibleSection = ({
     <div className="bg-card rounded-xl shadow-sm border border-border overflow-hidden">
       <button
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between px-6 py-4 hover:bg-muted/30 transition-colors"
+        className="w-full flex items-center justify-between px-3 sm:px-6 py-3 sm:py-4 hover:bg-muted/30 transition-colors"
       >
-        <div className="flex items-center gap-3">
-          <div className="p-2 rounded-lg bg-primary/10">
-            <Icon className="w-5 h-5 text-primary" />
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <div className="p-1.5 sm:p-2 rounded-lg bg-primary/10 flex-shrink-0">
+            <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
           </div>
-          <h3 className="text-base font-bold text-foreground">{title}</h3>
-          {badge && <span className="eng-badge eng-badge-primary">{badge}</span>}
+          <h3 className="text-sm sm:text-base font-bold text-foreground truncate">{title}</h3>
+          {badge && <span className="eng-badge eng-badge-primary hidden sm:inline-flex">{badge}</span>}
         </div>
         {open ? <ChevronUp className="w-4 h-4 text-muted-foreground" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
       </button>
-      {open && <div className="px-6 pb-6 pt-2">{children}</div>}
+      {open && <div className="px-3 sm:px-6 pb-4 sm:pb-6 pt-2">{children}</div>}
     </div>
   );
 };
@@ -270,13 +270,13 @@ const CalculadoraFranja = () => {
   return (
     <div className="space-y-5">
       {/* Header */}
-      <div className="bg-card rounded-xl p-6 shadow-sm border border-border">
-        <div className="flex items-start gap-4">
-          <div className="p-3 rounded-lg bg-primary/10">
-            <Calculator className="w-6 h-6 text-primary" />
+      <div className="bg-card rounded-xl p-4 sm:p-6 shadow-sm border border-border">
+        <div className="flex items-start gap-3 sm:gap-4">
+          <div className="p-2 sm:p-3 rounded-lg bg-primary/10 flex-shrink-0">
+            <Calculator className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
           </div>
-          <div className="flex-1">
-            <h2 className="text-xl font-bold text-foreground">Calculadora de Franja de Seguridad</h2>
+          <div className="flex-1 min-w-0">
+            <h2 className="text-base sm:text-xl font-bold text-foreground">Calculadora de Franja de Seguridad</h2>
             <p className="text-muted-foreground text-sm mt-1">
               Según RPTD N° 07 — Franja y Distancias de Seguridad (SEC)
             </p>
@@ -289,9 +289,9 @@ const CalculadoraFranja = () => {
       </div>
 
       {/* Result Summary - Always visible */}
-      <div className="bg-card rounded-xl p-6 shadow-sm border-2 border-primary/30">
-        <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-4">Resultado del Cálculo</h3>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border-2 border-primary/30">
+        <h3 className="text-xs sm:text-sm font-bold text-muted-foreground uppercase tracking-wider mb-3 sm:mb-4">Resultado del Cálculo</h3>
+        <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-6 gap-2 sm:gap-3">
           {[
             { label: "dE", value: calc.dE, unit: "m", color: "text-foreground" },
             { label: "df", value: calc.df, unit: "m", color: "text-foreground" },
@@ -300,18 +300,20 @@ const CalculadoraFranja = () => {
             { label: "DeL", value: calc.DeL, unit: "m", color: "text-primary" },
             { label: "FS", value: calc.FS, unit: "m", color: "text-primary" },
           ].map((r) => (
-            <div key={r.label} className={`rounded-lg p-3 text-center ${r.label === "FS" ? "bg-primary/10 border border-primary/30" : "bg-muted/50"}`}>
-              <p className={`text-xl font-bold font-mono ${r.color}`}>{r.value.toFixed(2)}</p>
-              <p className="text-xs text-muted-foreground mt-1">
-                {r.label === "FS" ? "Franja Seguridad" : r.label} [{r.unit}]
+            <div key={r.label} className={`rounded-lg p-2 sm:p-3 text-center ${r.label === "FS" ? "bg-primary/10 border border-primary/30" : "bg-muted/50"}`}>
+              <p className={`text-base sm:text-xl font-bold font-mono ${r.color}`}>{r.value.toFixed(2)}</p>
+              <p className="text-[10px] sm:text-xs text-muted-foreground mt-0.5 sm:mt-1">
+                {r.label === "FS" ? "FS" : r.label} <span className="hidden sm:inline">[{r.unit}]</span>
               </p>
             </div>
           ))}
         </div>
-        <div className="eng-formula mt-4">
-          <p className="text-center text-sm">
+        <div className="eng-formula mt-3 sm:mt-4">
+          <p className="text-center text-[10px] sm:text-sm leading-relaxed">
             <strong>D<sub>eL</sub></strong> = {calc.dE.toFixed(2)} + {calc.df.toFixed(2)} + {calc.dc.toFixed(2)} + {calc.ds.toFixed(2)} = <strong>{calc.DeL.toFixed(2)} m</strong>
-            &nbsp;&nbsp;→&nbsp;&nbsp;
+            <br className="sm:hidden" />
+            <span className="hidden sm:inline">&nbsp;&nbsp;→&nbsp;&nbsp;</span>
+            <span className="sm:hidden">→ </span>
             <strong>FS</strong> = 2 × {calc.DeL.toFixed(2)} = <strong className="text-primary">{calc.FS.toFixed(2)} m</strong>
           </p>
         </div>
@@ -319,8 +321,8 @@ const CalculadoraFranja = () => {
 
       {/* 1. Datos del Proyecto */}
       <CollapsibleSection title="1. Datos del Proyecto" icon={Settings} badge="General">
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          <div className="col-span-2 md:col-span-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+          <div className="sm:col-span-2 md:col-span-3">
             <InputField
               label="Nombre del Proyecto"
               value={project.projectName}
@@ -359,7 +361,7 @@ const CalculadoraFranja = () => {
 
       {/* 2. Conductor */}
       <CollapsibleSection title="2. Características del Conductor" icon={Zap} badge="RPTD N°07 §4.3">
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
           <InputField
             label="Tipo de Conductor"
             value={conductor.tipo}
@@ -400,7 +402,7 @@ const CalculadoraFranja = () => {
 
       {/* 3. Condiciones Ambientales */}
       <CollapsibleSection title="3. Condiciones Ambientales" icon={Wind} badge="RPTD N°11 §5.8">
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
           <SelectField
             label="Zona Geográfica (RPTD N°11 §5.8.1)"
             value={ambiente.zona}
@@ -457,7 +459,7 @@ const CalculadoraFranja = () => {
 
       {/* 4. Datos del Vano */}
       <CollapsibleSection title="4. Datos del Vano y Estructura" icon={Ruler} badge="Editable">
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
           <InputField
             label="Longitud del Vano"
             value={vano.longitudVano}
@@ -718,7 +720,7 @@ const CalculadoraFranja = () => {
       </CollapsibleSection>
 
       {/* 9. Resultado Final */}
-      <div className="bg-card rounded-xl p-6 shadow-sm border-2 border-primary/40">
+      <div className="bg-card rounded-xl p-3 sm:p-6 shadow-sm border-2 border-primary/40">
         <h3 className="eng-section-title">
           <Calculator className="w-5 h-5 text-primary" />
           9. Resultado — Franja de Seguridad
