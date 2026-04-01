@@ -321,8 +321,8 @@ const CalculadoraFranja = () => {
 
       {/* 1. Datos del Proyecto */}
       <CollapsibleSection title="1. Datos del Proyecto" icon={Settings} badge="General">
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          <div className="col-span-2 md:col-span-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+          <div className="sm:col-span-2 md:col-span-3">
             <InputField
               label="Nombre del Proyecto"
               value={project.projectName}
