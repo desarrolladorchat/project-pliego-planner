@@ -182,12 +182,13 @@ const InputField = ({
             }
             ${highlight ? "!bg-primary/10 !border-primary/40 !text-primary font-bold" : ""}
           `}
-      />
-      {unit && <span className="text-xs text-muted-foreground whitespace-nowrap min-w-[40px]">{unit}</span>}
+        />
+        {unit && <span className="text-xs text-muted-foreground whitespace-nowrap min-w-[40px]">{unit}</span>}
+      </div>
+      {hint && <p className="text-[10px] text-muted-foreground/70">{hint}</p>}
     </div>
-    {hint && <p className="text-[10px] text-muted-foreground/70">{hint}</p>}
-  </div>
-);
+  );
+};
 
 const SelectField = ({
   label,
