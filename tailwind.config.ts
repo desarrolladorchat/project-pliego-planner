@@ -13,12 +13,31 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        engineering: {
+          blue: "hsl(var(--engineering-blue))",
+          navy: "hsl(var(--engineering-navy))",
+          steel: "hsl(var(--engineering-steel))",
+          warning: "hsl(var(--engineering-warning))",
+          success: "hsl(var(--engineering-success))",
+          info: "hsl(var(--engineering-info))",
+        },
+        "table-header": "hsl(var(--table-header))",
+        "table-header-fg": "hsl(var(--table-header-foreground))",
+        "table-stripe": "hsl(var(--table-stripe))",
+        formula: {
+          bg: "hsl(var(--formula-bg))",
+          border: "hsl(var(--formula-border))",
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
