@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Zap, Ruler, FileText, ChevronRight } from "lucide-react";
+import { Zap, Ruler, FileText, ChevronRight, Calculator } from "lucide-react";
 import PliegoRPTD07 from "@/components/PliegoRPTD07";
 import PliegoRPTD11 from "@/components/PliegoRPTD11";
+import CalculadoraFranja from "@/components/CalculadoraFranja";
 
 const tabs = [
   {
