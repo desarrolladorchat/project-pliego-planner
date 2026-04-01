@@ -620,12 +620,6 @@ const CalculadoraFranja = () => {
               hint="Coeficiente de reducción"
             />
             <InputField
-              label="Relación Lv/Lp (Rvp)"
-              value={vano.Rvp}
-              onChange={(v) => setVano({ ...vano, Rvp: parseFloat(v) || 1 })}
-              hint="Relación luz de viento / luz de peso"
-            />
-            <InputField
               label="N° Cadenas en Paralelo (Nca)"
               value={vano.Nca}
               onChange={(v) => setVano({ ...vano, Nca: parseInt(v) || 1 })}
