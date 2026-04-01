@@ -104,7 +104,7 @@ const CollapsibleSection = ({
   title,
   icon: Icon,
   children,
-  defaultOpen = true,
+  defaultOpen = false,
   badge,
 }: {
   title: string;
