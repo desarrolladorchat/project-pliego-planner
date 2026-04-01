@@ -178,8 +178,8 @@ const CalculadoraRPTD11 = () => {
   const [cruceTensionDist, setCruceTensionDist] = useState(30); // m al punto de cruce
   const [kVInferior, setKVInferior] = useState(66); // kV línea inferior
 
-  const presionViento = useMemo(() => getPresionViento(ambiente.zona), [ambiente.zona]);
-  const tempAmbiente = useMemo(() => getTempAmbiente(ambiente.zona), [ambiente.zona]);
+  const presionViento = useMemo(() => ambiente.zona === "custom" ? ambiente.presionViento : getPresionViento(ambiente.zona), [ambiente.zona, ambiente.presionViento]);
+  const tempAmbiente = useMemo(() => ambiente.zona === "custom" ? ambiente.tempAmbiente : getTempAmbiente(ambiente.zona), [ambiente.zona, ambiente.tempAmbiente]);
 
   const calc = useMemo(() => {
     // ── 1. Gc – Factor de amplificación
