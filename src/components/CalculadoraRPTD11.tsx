@@ -671,8 +671,45 @@ const CalculadoraRPTD11 = () => {
         </div>
       </CollapsibleSection>
 
-      {/* ── 12. Cruces y Paralelismos (§5.7) ── */}
-      <CollapsibleSection title="12. Cruces y Paralelismos" icon={Shield} badge="§5.7" defaultOpen={false}>
+      {/* ── 12. Separación Fase-Fase (§5.4 RPTD N°07) ── */}
+      <CollapsibleSection title="12. Separación Fase-Fase" icon={Ruler} badge="§5.4" defaultOpen={false}>
+        <div className="space-y-4">
+          <div className="eng-formula">
+            <p className="text-sm mb-1"><strong>Separación mínima fase-fase (Zonas II y III):</strong></p>
+            <p className="text-center text-base font-semibold mb-3">
+              S = 0,36 × √F + kV/130 + 0,5 × C
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+            <InputField label="Flecha Máxima (F)" value={vano.flechaMax} onChange={(v) => setVano({ ...vano, flechaMax: parseFloat(v) || 0 })} unit="m" hint="Sin sobrecarga" />
+            <InputField label="Tensión Nominal (kV)" value={project.tensionNominal} onChange={(v) => setProject({ ...project, tensionNominal: parseFloat(v) || 0 })} unit="kV" />
+            <InputField label="Long. Cadena Aisladores (C)" value={separacion.longCadena} onChange={(v) => setSeparacion({ ...separacion, longCadena: parseFloat(v) || 0 })} unit="m" hint="Cadena de suspensión" />
+          </div>
+          <div className="eng-formula">
+            <p className="text-sm">
+              S = 0,36 × √{fmt(vano.flechaMax, 2)} + {fmt(project.tensionNominal, 0)}/130 + 0,5 × {fmt(separacion.longCadena, 2)}
+              {" "}= <strong className="text-primary">{fmt(calc.separacionFaseFase, 3)} m</strong>
+            </p>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="eng-table">
+              <thead><tr><th>Variable</th><th>Descripción</th><th>Valor</th><th>Unidad</th></tr></thead>
+              <tbody>
+                <tr><td className="font-mono font-semibold">F</td><td>Flecha máxima sin sobrecarga</td><td className="font-mono">{fmt(vano.flechaMax, 2)}</td><td>m</td></tr>
+                <tr><td className="font-mono font-semibold">kV</td><td>Tensión nominal entre conductores</td><td className="font-mono">{fmt(project.tensionNominal, 0)}</td><td>kV</td></tr>
+                <tr><td className="font-mono font-semibold">C</td><td>Longitud cadena aisladores suspensión</td><td className="font-mono">{fmt(separacion.longCadena, 2)}</td><td>m</td></tr>
+                <tr className="border-t-2 border-primary/30">
+                  <td className="font-mono font-bold">S</td><td>Separación mínima fase-fase</td>
+                  <td className="font-mono font-bold text-primary">{fmt(calc.separacionFaseFase, 3)}</td><td>m</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      {/* ── 13. Cruces y Paralelismos (§5.7) ── */}
+      <CollapsibleSection title="13. Cruces y Paralelismos" icon={Shield} badge="§5.7" defaultOpen={false}>
         <div className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-3">
             <InputField label="Distancia al punto de cruce (§5.7.5)" value={cruceTensionDist} onChange={(v) => setCruceTensionDist(parseFloat(v) || 0)} unit="m" />
