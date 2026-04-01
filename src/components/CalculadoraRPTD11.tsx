@@ -801,7 +801,7 @@ const CalculadoraRPTD11 = () => {
       </CollapsibleSection>
 
       {/* ── Resumen de Cálculos — Pliego N°11 ── */}
-      <CollapsibleSection title="Resumen de Cálculos — Pliego N°11" icon={Calculator} badge="Verificación">
+      <CollapsibleSection title="Resumen de Cálculos — Pliego N°11" icon={Calculator} badge="Verificación" defaultOpen={false}>
         <div className="overflow-x-auto">
           <table className="eng-table">
             <thead>
