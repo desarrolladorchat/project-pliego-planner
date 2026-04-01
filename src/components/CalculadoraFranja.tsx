@@ -264,6 +264,19 @@ const CalculadoraFranja = () => {
     // Franja de seguridad = 2 × DeL
     const FS = 2 * DeL;
 
+    // Altura mínima transitable (Tab 5 / Tab 8): 6.5 + 0.006 × kV
+    const alturaMinTransitable = 6.5 + 0.006 * project.tensionNominal;
+
+    // Separación fase-fase (Pto 5.4): 0.36 × √f + kV/130 + 0.5 × C
+    const C = conductor.diametro / 1000; // diámetro en metros
+    const separacionFF = 0.36 * Math.sqrt(vano.flecha) + project.tensionNominal / 130 + 0.5 * C;
+
+    // Factor Gc (mismo que RPTD 11, simplificado)
+    const Gc = 1.0; // RPTD 07 no define Gc explícitamente, se asume 1.0
+
+    // Corrección altitud factor Ka
+    const Ka = ambiente.altitud > 1000 ? 1 + Math.floor((ambiente.altitud - 1000) / 300) * 0.03 : 1.0;
+
     return {
       fr,
       pvEfectiva,
@@ -283,6 +296,10 @@ const CalculadoraFranja = () => {
       ds,
       DeL,
       FS,
+      alturaMinTransitable,
+      separacionFF,
+      Gc,
+      Ka,
     };
   }, [project, conductor, ambiente, vano, presionViento]);
 
