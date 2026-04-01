@@ -249,8 +249,8 @@ const CalculadoraFranja = () => {
     // df = flecha × sin(αC)
     const df = vano.flecha * Math.sin(alphaCRad);
 
-    // Ángulo de desviación de la cadena de aisladores (fórmula completa RPTD N°07)
-    // tan(α) = [k × (Lv × Nsc × d × Qvc + 0.5 × Nca × da × Lc × Qva) × 10⁻³ + Tr] / [(Lv/Rvp) × Nsc × p + 0.5 × Nca × Na × Pa]
+     // Ángulo de desviación de la cadena de aisladores (fórmula completa RPTD N°07)
+     // tan(α) = [k × (Lv × Nsc × d × Qvc + 0.5 × Nca × da × Lc × Qva) × 10⁻³ + Tr] / [Lp × Nsc × p + 0.5 × Nca × Na × Pa]
     // Tr = 2 × Nsc × Tc × sin(δ/2)
     const fp = 1.2; // factor amplificación (legacy display)
     const ncp = project.numConductoresFase; // Nsc
