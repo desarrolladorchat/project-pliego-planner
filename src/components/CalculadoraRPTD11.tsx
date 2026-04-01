@@ -528,7 +528,7 @@ const CalculadoraRPTD11 = () => {
       </CollapsibleSection>
 
       {/* ── 8. Viento sobre conductores (§5.11) ── */}
-      <CollapsibleSection title="8. Viento sobre Conductores y Cables" icon={Wind} badge="§5.11">
+      <CollapsibleSection title="8. Viento sobre Conductores y Cables" icon={Wind} badge="§5.11" defaultOpen={false}>
         <div className="space-y-4">
           <div className="eng-formula">
             <p className="text-sm mb-1"><strong>Fuerza de viento sobre conductor (§5.11.1):</strong></p>
