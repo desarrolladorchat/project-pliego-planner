@@ -25,7 +25,7 @@ const defaultConductor = {
 };
 
 const defaultAmbiente = {
-  zona: "III" as "II" | "III",
+  zona: "III" as "II" | "III" | "custom",
   altitud: 131, // m.s.n.m.
   tempAmbiente: 10, // °C
   tempMaxima: 35, // °C
