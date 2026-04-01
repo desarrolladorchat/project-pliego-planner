@@ -560,6 +560,68 @@ const CalculadoraFranja = () => {
             onChange={(v) => setVano({ ...vano, numAislacionFase: parseInt(v) || 0 })}
           />
         </div>
+
+        {/* Variables adicionales para fórmula completa tan(α) cadena */}
+        <div className="mt-4 pt-4 border-t border-border">
+          <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3">
+            Variables fórmula tan(α) cadena — RPTD N°07
+          </h4>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+            <InputField
+              label="Coeficiente k (≤ 1.0)"
+              value={vano.k}
+              onChange={(v) => setVano({ ...vano, k: parseFloat(v) || 0 })}
+              hint="Coeficiente de reducción"
+            />
+            <InputField
+              label="Relación Lv/Lp (Rvp)"
+              value={vano.Rvp}
+              onChange={(v) => setVano({ ...vano, Rvp: parseFloat(v) || 1 })}
+              hint="Relación luz de viento / luz de peso"
+            />
+            <InputField
+              label="N° Cadenas en Paralelo (Nca)"
+              value={vano.Nca}
+              onChange={(v) => setVano({ ...vano, Nca: parseInt(v) || 1 })}
+            />
+            <InputField
+              label="Diámetro Disco Aislador (da)"
+              value={vano.diametroAislador}
+              onChange={(v) => setVano({ ...vano, diametroAislador: parseFloat(v) || 0 })}
+              unit="mm"
+            />
+            <InputField
+              label="N° Aisladores por Cadena (Na)"
+              value={vano.Na}
+              onChange={(v) => setVano({ ...vano, Na: parseInt(v) || 0 })}
+            />
+            <InputField
+              label="Peso Unitario Aislador (Pa)"
+              value={vano.pesoUnitarioAislador}
+              onChange={(v) => setVano({ ...vano, pesoUnitarioAislador: parseFloat(v) || 0 })}
+              unit="kg"
+            />
+            <InputField
+              label="Presión Viento Aisladores (Qva)"
+              value={vano.Qva}
+              onChange={(v) => setVano({ ...vano, Qva: parseFloat(v) || 0 })}
+              unit="kg/m²"
+            />
+            <InputField
+              label="Tensión Mecánica Subconductor (Tc)"
+              value={vano.Tc}
+              onChange={(v) => setVano({ ...vano, Tc: parseFloat(v) || 0 })}
+              unit="kg"
+              hint="Tensión en condición de viento"
+            />
+            <InputField
+              label="Ángulo de la Línea (δ)"
+              value={vano.anguloLinea}
+              onChange={(v) => setVano({ ...vano, anguloLinea: parseFloat(v) || 0 })}
+              unit="°"
+              hint="0° = línea recta (Tr = 0)"
+            />
+        </div>
       </CollapsibleSection>
 
       {/* 5. Cálculo Detallado dE */}
