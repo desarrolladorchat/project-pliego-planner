@@ -63,8 +63,15 @@ const sidebarItems = [
 ];
 
 const Index = () => {
-  const [activeTab, setActiveTab] = useState("rptd01");
+  const [searchParams] = useSearchParams();
+  const initialTab = searchParams.get("tab") || "rptd01";
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    const tab = searchParams.get("tab");
+    if (tab) setActiveTab(tab);
+  }, [searchParams]);
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
