@@ -18,6 +18,7 @@ import PliegoRPTD15 from "@/components/PliegoRPTD15";
 import PliegoRPTD16 from "@/components/PliegoRPTD16";
 import CalculadoraFranja from "@/components/CalculadoraFranja";
 import CalculadoraRPTD11 from "@/components/CalculadoraRPTD11";
+import CalculadoraRPTD06 from "@/components/CalculadoraRPTD06";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 const sidebarItems = [
@@ -47,6 +48,7 @@ const sidebarItems = [
     items: [
       { id: "calculadora", label: "Calc. Franja", subtitle: "RPTD N° 07", icon: Calculator },
       { id: "calculadora11", label: "Calc. RPTD 11", subtitle: "Líneas AT/EAT", icon: Building },
+      { id: "calculadora06", label: "Calc. PAT", subtitle: "RPTD N° 06", icon: CircuitBoard },
     ],
   },
 ];
@@ -164,6 +166,7 @@ const Index = () => {
             {activeTab === "rptd16" && <PliegoRPTD16 />}
             {activeTab === "calculadora" && <CalculadoraFranja />}
             {activeTab === "calculadora11" && <CalculadoraRPTD11 />}
+            {activeTab === "calculadora06" && <CalculadoraRPTD06 />}
           </div>
 
           {/* Footer */}
