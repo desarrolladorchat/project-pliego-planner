@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Zap, Ruler, ChevronRight, Calculator, Building, Activity, Menu, X, Network, FileText, Cable, Shield, CircuitBoard, Flame, AlertTriangle, Building2, Power, Layers, Users, Wrench, FileCheck } from "lucide-react";
 import PliegoRPTD01 from "@/components/PliegoRPTD01";
 import PliegoRPTD02 from "@/components/PliegoRPTD02";
