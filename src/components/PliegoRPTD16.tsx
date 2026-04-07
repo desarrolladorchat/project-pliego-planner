@@ -1,3 +1,4 @@
+import DownloadPdfButton from "@/components/DownloadPdfButton";
 import { useState } from "react";
 import { BookOpen, ChevronDown, ChevronUp, FileCheck, FileText, ClipboardList } from "lucide-react";
 
@@ -40,6 +41,7 @@ const PliegoRPTD16 = () => {
               <span className="eng-badge eng-badge-primary">Decreto N° 109/2017</span>
               <span className="eng-badge eng-badge-warning">Puesta en Servicio</span>
             </div>
+            <div className="mt-3"><DownloadPdfButton pliegoId="rptd16" /></div>
           </div>
         </div>
       </div>

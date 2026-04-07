@@ -1,3 +1,4 @@
+import DownloadPdfButton from "@/components/DownloadPdfButton";
 import { useState } from "react";
 import { BookOpen, Wind, Zap, Shield, Building, Wrench, Mountain, Hammer, Snowflake, ChevronDown, ChevronUp } from "lucide-react";
 
@@ -40,6 +41,7 @@ const PliegoRPTD11 = () => {
               <span className="eng-badge eng-badge-primary">DFL N° 4/20.018</span>
               <span className="eng-badge eng-badge-warning">Transporte</span>
             </div>
+            <div className="mt-3"><DownloadPdfButton pliegoId="rptd11" /></div>
           </div>
         </div>
       </div>
