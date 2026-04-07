@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Zap, Ruler, ChevronRight, Calculator, Building, Activity, Menu, X } from "lucide-react";
+import { Zap, Ruler, ChevronRight, Calculator, Building, Activity, Menu, X, Network } from "lucide-react";
 import PliegoRPTD01 from "@/components/PliegoRPTD01";
+import PliegoRPTD02 from "@/components/PliegoRPTD02";
 import PliegoRPTD07 from "@/components/PliegoRPTD07";
 import PliegoRPTD11 from "@/components/PliegoRPTD11";
 import CalculadoraFranja from "@/components/CalculadoraFranja";
@@ -12,6 +13,7 @@ const sidebarItems = [
     group: "Pliegos Técnicos",
     items: [
       { id: "rptd01", label: "RPTD N° 01", subtitle: "Tensiones y Frecuencias", icon: Activity },
+      { id: "rptd02", label: "RPTD N° 02", subtitle: "Clasificación Instalaciones", icon: Network },
       { id: "rptd07", label: "RPTD N° 07", subtitle: "Franja y Distancias", icon: Ruler },
       { id: "rptd11", label: "RPTD N° 11", subtitle: "Líneas AT y EAT", icon: Zap },
     ],
@@ -121,6 +123,7 @@ const Index = () => {
         <main className="flex-1 overflow-y-auto">
           <div className="max-w-5xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6">
             {activeTab === "rptd01" && <PliegoRPTD01 />}
+            {activeTab === "rptd02" && <PliegoRPTD02 />}
             {activeTab === "rptd07" && <PliegoRPTD07 />}
             {activeTab === "rptd11" && <PliegoRPTD11 />}
             {activeTab === "calculadora" && <CalculadoraFranja />}
