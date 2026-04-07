@@ -42,9 +42,7 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2 sm:gap-3">
-              <div className="p-1.5 sm:p-2 rounded-lg bg-primary text-primary-foreground flex-shrink-0">
-                <FileText className="w-4 h-4 sm:w-5 sm:h-5" />
-              </div>
+              <img src="/logo-trli.png" alt="TransmissionLine Logo" className="w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0" />
               <div className="min-w-0">
                 <h1 className="text-sm sm:text-base font-bold text-foreground leading-tight truncate">
                   Pliegos Técnicos Normativos
