@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Zap, Ruler, ChevronRight, Calculator, Building, Activity, Menu, X, Network, FileText, Cable, Shield, CircuitBoard, Flame, AlertTriangle, Building2, Power, Layers, Users, Wrench } from "lucide-react";
+import { Zap, Ruler, ChevronRight, Calculator, Building, Activity, Menu, X, Network, FileText, Cable, Shield, CircuitBoard, Flame, AlertTriangle, Building2, Power, Layers, Users, Wrench, FileCheck } from "lucide-react";
 import PliegoRPTD01 from "@/components/PliegoRPTD01";
 import PliegoRPTD02 from "@/components/PliegoRPTD02";
 import PliegoRPTD03 from "@/components/PliegoRPTD03";
@@ -15,6 +15,7 @@ import PliegoRPTD12 from "@/components/PliegoRPTD12";
 import PliegoRPTD13 from "@/components/PliegoRPTD13";
 import PliegoRPTD14 from "@/components/PliegoRPTD14";
 import PliegoRPTD15 from "@/components/PliegoRPTD15";
+import PliegoRPTD16 from "@/components/PliegoRPTD16";
 import CalculadoraFranja from "@/components/CalculadoraFranja";
 import CalculadoraRPTD11 from "@/components/CalculadoraRPTD11";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -38,6 +39,7 @@ const sidebarItems = [
       { id: "rptd13", label: "RPTD N° 13", subtitle: "Líneas MT y BT", icon: Layers },
       { id: "rptd14", label: "RPTD N° 14", subtitle: "Apoyo en Postes", icon: Users },
       { id: "rptd15", label: "RPTD N° 15", subtitle: "Operación y Mantenimiento", icon: Wrench },
+      { id: "rptd16", label: "RPTD N° 16", subtitle: "Puesta en Servicio", icon: FileCheck },
     ],
   },
   {
@@ -159,6 +161,7 @@ const Index = () => {
             {activeTab === "rptd13" && <PliegoRPTD13 />}
             {activeTab === "rptd14" && <PliegoRPTD14 />}
             {activeTab === "rptd15" && <PliegoRPTD15 />}
+            {activeTab === "rptd16" && <PliegoRPTD16 />}
             {activeTab === "calculadora" && <CalculadoraFranja />}
             {activeTab === "calculadora11" && <CalculadoraRPTD11 />}
           </div>
