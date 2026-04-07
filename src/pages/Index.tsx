@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Zap, Ruler, ChevronRight, Calculator, Building, Activity, Menu, X, Network, FileText, Cable, Shield, CircuitBoard } from "lucide-react";
+import { Zap, Ruler, ChevronRight, Calculator, Building, Activity, Menu, X, Network, FileText, Cable, Shield, CircuitBoard, Flame } from "lucide-react";
 import PliegoRPTD01 from "@/components/PliegoRPTD01";
 import PliegoRPTD02 from "@/components/PliegoRPTD02";
 import PliegoRPTD03 from "@/components/PliegoRPTD03";
@@ -7,6 +7,7 @@ import PliegoRPTD04 from "@/components/PliegoRPTD04";
 import PliegoRPTD05 from "@/components/PliegoRPTD05";
 import PliegoRPTD06 from "@/components/PliegoRPTD06";
 import PliegoRPTD07 from "@/components/PliegoRPTD07";
+import PliegoRPTD08 from "@/components/PliegoRPTD08";
 import PliegoRPTD11 from "@/components/PliegoRPTD11";
 import CalculadoraFranja from "@/components/CalculadoraFranja";
 import CalculadoraRPTD11 from "@/components/CalculadoraRPTD11";
@@ -23,6 +24,7 @@ const sidebarItems = [
       { id: "rptd05", label: "RPTD N° 05", subtitle: "Aislación", icon: Shield },
       { id: "rptd06", label: "RPTD N° 06", subtitle: "Puesta a Tierra", icon: CircuitBoard },
       { id: "rptd07", label: "RPTD N° 07", subtitle: "Franja y Distancias", icon: Ruler },
+      { id: "rptd08", label: "RPTD N° 08", subtitle: "Protección contra Incendios", icon: Flame },
       { id: "rptd11", label: "RPTD N° 11", subtitle: "Líneas AT y EAT", icon: Zap },
     ],
   },
