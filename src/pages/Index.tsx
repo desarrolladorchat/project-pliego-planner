@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Zap, Ruler, ChevronRight, Calculator, Building, Activity, Menu, X } from "lucide-react";
+import { Zap, Ruler, ChevronRight, Calculator, Building, Activity, Menu, X, Network } from "lucide-react";
 import PliegoRPTD01 from "@/components/PliegoRPTD01";
 import PliegoRPTD02 from "@/components/PliegoRPTD02";
 import PliegoRPTD07 from "@/components/PliegoRPTD07";
