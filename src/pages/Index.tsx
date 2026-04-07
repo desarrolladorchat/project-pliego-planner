@@ -126,6 +126,7 @@ const Index = () => {
           <div className="max-w-5xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6">
             {activeTab === "rptd01" && <PliegoRPTD01 />}
             {activeTab === "rptd02" && <PliegoRPTD02 />}
+            {activeTab === "rptd03" && <PliegoRPTD03 />}
             {activeTab === "rptd07" && <PliegoRPTD07 />}
             {activeTab === "rptd11" && <PliegoRPTD11 />}
             {activeTab === "calculadora" && <CalculadoraFranja />}
