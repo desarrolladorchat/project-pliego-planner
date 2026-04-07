@@ -139,6 +139,7 @@ const Index = () => {
             {activeTab === "rptd05" && <PliegoRPTD05 />}
             {activeTab === "rptd06" && <PliegoRPTD06 />}
             {activeTab === "rptd07" && <PliegoRPTD07 />}
+            {activeTab === "rptd08" && <PliegoRPTD08 />}
             {activeTab === "rptd11" && <PliegoRPTD11 />}
             {activeTab === "calculadora" && <CalculadoraFranja />}
             {activeTab === "calculadora11" && <CalculadoraRPTD11 />}
