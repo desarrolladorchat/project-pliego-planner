@@ -20,6 +20,7 @@ import CalculadoraFranja from "@/components/CalculadoraFranja";
 import CalculadoraRPTD11 from "@/components/CalculadoraRPTD11";
 import CalculadoraRPTD06 from "@/components/CalculadoraRPTD06";
 import CalculadoraRPTD05 from "@/components/CalculadoraRPTD05";
+import CalculadoraRPTD04 from "@/components/CalculadoraRPTD04";
 import CalculadoraRPTD15 from "@/components/CalculadoraRPTD15";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
@@ -50,6 +51,7 @@ const sidebarItems = [
     items: [
       { id: "calculadora", label: "Calc. Franja", subtitle: "RPTD N° 07", icon: Calculator },
       { id: "calculadora11", label: "Calc. RPTD 11", subtitle: "Líneas AT/EAT", icon: Building },
+      { id: "calculadora04", label: "Calc. Conductores", subtitle: "RPTD N° 04", icon: Cable },
       { id: "calculadora06", label: "Calc. PAT", subtitle: "RPTD N° 06", icon: CircuitBoard },
       { id: "calculadora05", label: "Calc. Aislación", subtitle: "RPTD N° 05", icon: Shield },
       { id: "calculadora15", label: "Calc. Distancias", subtitle: "RPTD N° 15", icon: Wrench },
@@ -171,6 +173,7 @@ const Index = () => {
             {activeTab === "calculadora" && <CalculadoraFranja />}
             {activeTab === "calculadora11" && <CalculadoraRPTD11 />}
             {activeTab === "calculadora06" && <CalculadoraRPTD06 />}
+            {activeTab === "calculadora04" && <CalculadoraRPTD04 />}
             {activeTab === "calculadora05" && <CalculadoraRPTD05 />}
             {activeTab === "calculadora15" && <CalculadoraRPTD15 />}
           </div>
