@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Zap, Ruler, ChevronRight, Calculator, Building, Activity, Menu, X, Network, FileText, Cable, Shield, CircuitBoard, Flame, AlertTriangle, Building2 } from "lucide-react";
+import { Zap, Ruler, ChevronRight, Calculator, Building, Activity, Menu, X, Network, FileText, Cable, Shield, CircuitBoard, Flame, AlertTriangle, Building2, Power } from "lucide-react";
 import PliegoRPTD01 from "@/components/PliegoRPTD01";
 import PliegoRPTD02 from "@/components/PliegoRPTD02";
 import PliegoRPTD03 from "@/components/PliegoRPTD03";
@@ -11,6 +11,7 @@ import PliegoRPTD08 from "@/components/PliegoRPTD08";
 import PliegoRPTD09 from "@/components/PliegoRPTD09";
 import PliegoRPTD10 from "@/components/PliegoRPTD10";
 import PliegoRPTD11 from "@/components/PliegoRPTD11";
+import PliegoRPTD12 from "@/components/PliegoRPTD12";
 import CalculadoraFranja from "@/components/CalculadoraFranja";
 import CalculadoraRPTD11 from "@/components/CalculadoraRPTD11";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -30,6 +31,7 @@ const sidebarItems = [
       { id: "rptd09", label: "RPTD N° 09", subtitle: "Señalización de Seguridad", icon: AlertTriangle },
       { id: "rptd10", label: "RPTD N° 10", subtitle: "Centrales y Subestaciones", icon: Building2 },
       { id: "rptd11", label: "RPTD N° 11", subtitle: "Líneas AT y EAT", icon: Zap },
+      { id: "rptd12", label: "RPTD N° 12", subtitle: "Líneas Distribución MT", icon: Power },
     ],
   },
   {
@@ -147,6 +149,7 @@ const Index = () => {
             {activeTab === "rptd09" && <PliegoRPTD09 />}
             {activeTab === "rptd10" && <PliegoRPTD10 />}
             {activeTab === "rptd11" && <PliegoRPTD11 />}
+            {activeTab === "rptd12" && <PliegoRPTD12 />}
             {activeTab === "calculadora" && <CalculadoraFranja />}
             {activeTab === "calculadora11" && <CalculadoraRPTD11 />}
           </div>
