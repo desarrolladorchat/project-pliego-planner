@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Zap, Ruler, ChevronRight, Calculator, Building, Activity, Menu, X, Network, FileText, Cable, Shield, CircuitBoard, Flame, AlertTriangle } from "lucide-react";
+import { Zap, Ruler, ChevronRight, Calculator, Building, Activity, Menu, X, Network, FileText, Cable, Shield, CircuitBoard, Flame, AlertTriangle, Building2 } from "lucide-react";
 import PliegoRPTD01 from "@/components/PliegoRPTD01";
 import PliegoRPTD02 from "@/components/PliegoRPTD02";
 import PliegoRPTD03 from "@/components/PliegoRPTD03";
@@ -9,6 +9,7 @@ import PliegoRPTD06 from "@/components/PliegoRPTD06";
 import PliegoRPTD07 from "@/components/PliegoRPTD07";
 import PliegoRPTD08 from "@/components/PliegoRPTD08";
 import PliegoRPTD09 from "@/components/PliegoRPTD09";
+import PliegoRPTD10 from "@/components/PliegoRPTD10";
 import PliegoRPTD11 from "@/components/PliegoRPTD11";
 import CalculadoraFranja from "@/components/CalculadoraFranja";
 import CalculadoraRPTD11 from "@/components/CalculadoraRPTD11";
@@ -27,6 +28,7 @@ const sidebarItems = [
       { id: "rptd07", label: "RPTD N° 07", subtitle: "Franja y Distancias", icon: Ruler },
       { id: "rptd08", label: "RPTD N° 08", subtitle: "Protección contra Incendios", icon: Flame },
       { id: "rptd09", label: "RPTD N° 09", subtitle: "Señalización de Seguridad", icon: AlertTriangle },
+      { id: "rptd10", label: "RPTD N° 10", subtitle: "Centrales y Subestaciones", icon: Building2 },
       { id: "rptd11", label: "RPTD N° 11", subtitle: "Líneas AT y EAT", icon: Zap },
     ],
   },
