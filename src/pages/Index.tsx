@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Zap, Ruler, ChevronRight, Calculator, Building, Activity, Menu, X, Network } from "lucide-react";
+import { Zap, Ruler, ChevronRight, Calculator, Building, Activity, Menu, X, Network, FileText } from "lucide-react";
 import PliegoRPTD01 from "@/components/PliegoRPTD01";
 import PliegoRPTD02 from "@/components/PliegoRPTD02";
+import PliegoRPTD03 from "@/components/PliegoRPTD03";
 import PliegoRPTD07 from "@/components/PliegoRPTD07";
 import PliegoRPTD11 from "@/components/PliegoRPTD11";
 import CalculadoraFranja from "@/components/CalculadoraFranja";
@@ -14,6 +15,7 @@ const sidebarItems = [
     items: [
       { id: "rptd01", label: "RPTD N° 01", subtitle: "Tensiones y Frecuencias", icon: Activity },
       { id: "rptd02", label: "RPTD N° 02", subtitle: "Clasificación Instalaciones", icon: Network },
+      { id: "rptd03", label: "RPTD N° 03", subtitle: "Proyectos y Estudios", icon: FileText },
       { id: "rptd07", label: "RPTD N° 07", subtitle: "Franja y Distancias", icon: Ruler },
       { id: "rptd11", label: "RPTD N° 11", subtitle: "Líneas AT y EAT", icon: Zap },
     ],
